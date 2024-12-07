@@ -5,5 +5,9 @@ part 'register_state.dart';
 part 'register_cubit.freezed.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit() : super(RegisterState.initial());
+  RegisterCubit() : super(RegisterState.initial(true));
+
+  setObsecure(bool activeObsecure) {
+    emit(RegisterState.initial(!activeObsecure));
+  }
 }

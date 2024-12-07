@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:woodman_project_fe/helper/size_helper.dart';
 import 'package:woodman_project_fe/main/view/pages/login/cubit/login_cubit.dart';
+import 'package:woodman_project_fe/main/view/widged/my_circular_button_widget.dart';
 import 'package:woodman_project_fe/theme/color_themes.dart';
-
 import '../../widged/my_text_field_widget.dart';
 
 class LoginView extends StatefulWidget {
@@ -19,7 +19,6 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
@@ -40,7 +39,6 @@ class _LoginViewState extends State<LoginView> {
       body: SafeArea(
         child: BlocConsumer<LoginCubit, LoginState>(
           listener: (context, state) {
-            // TODO: implement listener
             state.maybeWhen(
               orElse: () {},
               success: () async {
@@ -89,7 +87,7 @@ class _LoginViewState extends State<LoginView> {
             SizedBox(
               height: SizeHelper.getScreenHeight(context) * 0.1,
             ),
-            Text(
+            const Text(
               "Login",
               style: TextStyle(
                 fontSize: 40,
@@ -124,7 +122,7 @@ class _LoginViewState extends State<LoginView> {
             ),
             TextButton(
               onPressed: () {},
-              child: Text(
+              child: const Text(
                 "Forgot Password ?",
                 style: TextStyle(
                   fontSize: 12,
@@ -137,27 +135,11 @@ class _LoginViewState extends State<LoginView> {
             ),
             Align(
               alignment: Alignment.centerRight,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: ColorThemes.primaryColor,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(50),
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Icon(
-                        Icons.arrow_right_alt_rounded,
-                        color: ColorThemes.whiteColor,
-                      ),
-                    ),
-                  ),
-                ),
+              child: MyCircularButtonWidget(
+                onTap: () {},
+                icon: Icons.arrow_forward,
               ),
-            )
+            ),
           ],
         ),
       ),

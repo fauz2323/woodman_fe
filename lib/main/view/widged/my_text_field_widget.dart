@@ -23,12 +23,12 @@ class MyTextFieldWidget extends StatelessWidget {
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         hintText: hintText,
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
             color: ColorThemes.blackColor,
           ),
         ),
-        focusedBorder: UnderlineInputBorder(
+        focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
             color: ColorThemes.primaryColor,
           ),

@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RegisterState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(bool activeObsecure) initial,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
@@ -26,7 +26,7 @@ mixin _$RegisterState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(bool activeObsecure)? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
@@ -34,7 +34,7 @@ mixin _$RegisterState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(bool activeObsecure)? initial,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
@@ -94,6 +94,8 @@ abstract class _$$InitialImplCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
           _$InitialImpl value, $Res Function(_$InitialImpl) then) =
       __$$InitialImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool activeObsecure});
 }
 
 /// @nodoc
@@ -106,60 +108,86 @@ class __$$InitialImplCopyWithImpl<$Res>
 
   /// Create a copy of RegisterState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? activeObsecure = null,
+  }) {
+    return _then(_$InitialImpl(
+      null == activeObsecure
+          ? _value.activeObsecure
+          : activeObsecure // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
+  const _$InitialImpl(this.activeObsecure);
+
+  @override
+  final bool activeObsecure;
 
   @override
   String toString() {
-    return 'RegisterState.initial()';
+    return 'RegisterState.initial(activeObsecure: $activeObsecure)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$InitialImpl &&
+            (identical(other.activeObsecure, activeObsecure) ||
+                other.activeObsecure == activeObsecure));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, activeObsecure);
+
+  /// Create a copy of RegisterState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(bool activeObsecure) initial,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
   }) {
-    return initial();
+    return initial(activeObsecure);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(bool activeObsecure)? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
   }) {
-    return initial?.call();
+    return initial?.call(activeObsecure);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(bool activeObsecure)? initial,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(activeObsecure);
     }
     return orElse();
   }
@@ -203,7 +231,15 @@ class _$InitialImpl implements _Initial {
 }
 
 abstract class _Initial implements RegisterState {
-  const factory _Initial() = _$InitialImpl;
+  const factory _Initial(final bool activeObsecure) = _$InitialImpl;
+
+  bool get activeObsecure;
+
+  /// Create a copy of RegisterState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -247,7 +283,7 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(bool activeObsecure) initial,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
@@ -258,7 +294,7 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(bool activeObsecure)? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
@@ -269,7 +305,7 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(bool activeObsecure)? initial,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
@@ -364,7 +400,7 @@ class _$SuccessImpl implements _Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(bool activeObsecure) initial,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
@@ -375,7 +411,7 @@ class _$SuccessImpl implements _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(bool activeObsecure)? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
@@ -386,7 +422,7 @@ class _$SuccessImpl implements _Success {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(bool activeObsecure)? initial,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
@@ -508,7 +544,7 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(bool activeObsecure) initial,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
@@ -519,7 +555,7 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(bool activeObsecure)? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
@@ -530,7 +566,7 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(bool activeObsecure)? initial,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
