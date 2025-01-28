@@ -91,7 +91,7 @@ class BerandaView extends StatelessWidget {
         itemCount: 4,
         separatorBuilder: (context, index) => const SizedBox(width: 10),
         itemBuilder: (context, index) => const MyProductCardWidget(
-          imageUrl: 'asset/images/sofa.png',
+          imageUrl: 'asset/images/sofabed.png',
           title: 'Moderen bedsofa',
           price: 'Rp.2.999.000',
         ),
