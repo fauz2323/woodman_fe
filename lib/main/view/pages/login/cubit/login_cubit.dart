@@ -5,7 +5,7 @@ part 'login_state.dart';
 part 'login_cubit.freezed.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginState.initial(true));
+  LoginCubit() : super(const LoginState.initial(true));
 
   setObsecure(bool activeObsecure) {
     emit(LoginState.initial(!activeObsecure));

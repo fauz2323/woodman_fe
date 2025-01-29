@@ -5,5 +5,5 @@ part 'beranda_state.dart';
 part 'beranda_cubit.freezed.dart';
 
 class BerandaCubit extends Cubit<BerandaState> {
-  BerandaCubit() : super(BerandaState.initial());
+  BerandaCubit() : super(const BerandaState.initial());
 }

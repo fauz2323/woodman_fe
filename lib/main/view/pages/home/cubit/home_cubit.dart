@@ -5,7 +5,7 @@ part 'home_state.dart';
 part 'home_cubit.freezed.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeState.initial(0));
+  HomeCubit() : super(const HomeState.initial(0));
 
   void setSelected(int index) {
     emit(HomeState.initial(index));
