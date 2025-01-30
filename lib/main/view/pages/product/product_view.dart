@@ -9,27 +9,35 @@ class ProductView extends StatelessWidget {
   final List<ProductModel> products = [
     ProductModel(
       name: 'Single SpringBed',
+      description: '',
       dimension: '50x50x50',
       price: 299999.00,
-      imageUrl: 'asset/images/sofa.png',
+      thumbnailUrl: 'asset/images/sofa.png',
+      imageUrl: [],
     ),
     ProductModel(
       name: 'Double SpringBed',
+      description: '',
       dimension: '100x100x50',
       price: 399999.00,
-      imageUrl: 'asset/images/sofabed.png',
+      thumbnailUrl: 'asset/images/sofabed.png',
+      imageUrl: [],
     ),
     ProductModel(
       name: 'Single SpringBed',
+      description: '',
       dimension: '50x50x50',
       price: 299999.00,
-      imageUrl: 'asset/images/sofa.png',
+      thumbnailUrl: 'asset/images/sofa.png',
+      imageUrl: [],
     ),
     ProductModel(
       name: 'Double SpringBed',
+      description: '',
       dimension: '100x100x50',
       price: 399999.00,
-      imageUrl: 'asset/images/sofabed.png',
+      thumbnailUrl: 'asset/images/sofabed.png',
+      imageUrl: [],
     ),
   ];
   @override

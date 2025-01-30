@@ -33,7 +33,7 @@ class MyProductCardHorizontalWidget extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.asset(
-              product.imageUrl,
+              product.thumbnailUrl,
               fit: BoxFit.contain,
             ),
           ),
@@ -59,7 +59,7 @@ class MyProductCardHorizontalWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    product.dimension,
+                    product.description,
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 12,
