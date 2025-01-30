@@ -30,14 +30,17 @@ class MyProductCardHorizontalWidget extends StatelessWidget {
       child: Row(
         children: [
           // Product image
-          Image.asset(
-            product.imageUrl,
-            fit: BoxFit.contain,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: Image.asset(
+              product.imageUrl,
+              fit: BoxFit.contain,
+            ),
           ),
           // Right side - Product details
           Expanded(
             child: Container(
-              padding: const EdgeInsets.fromLTRB(8, 14, 14, 8),
+              padding: const EdgeInsets.fromLTRB(10, 14, 14, 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
