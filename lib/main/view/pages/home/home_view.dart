@@ -12,7 +12,7 @@ class HomeView extends StatelessWidget {
   static final List<Widget> _fragment = <Widget>[
     BerandaView(),
     ProductView(),
-    const CartView(),
+    CartView(),
     const ProfileView(),
   ];
 
