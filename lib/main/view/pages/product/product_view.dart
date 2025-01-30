@@ -1,45 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:woodman_project_fe/main/view/pages/product/cubit/product_cubit.dart';
 import 'package:woodman_project_fe/main/view/widged/my_product_card_horizontal_widget.dart';
 import 'package:woodman_project_fe/model/product_model.dart';
 
 class ProductView extends StatelessWidget {
-  ProductView({super.key});
+  const ProductView({super.key});
 
-  final List<ProductModel> products = [
-    ProductModel(
-      name: 'Single SpringBed',
-      description: '',
-      dimension: '50x50x50',
-      price: 299999.00,
-      thumbnailUrl: 'asset/images/sofa.png',
-      imageUrl: [],
-    ),
-    ProductModel(
-      name: 'Double SpringBed',
-      description: '',
-      dimension: '100x100x50',
-      price: 399999.00,
-      thumbnailUrl: 'asset/images/sofabed.png',
-      imageUrl: [],
-    ),
-    ProductModel(
-      name: 'Single SpringBed',
-      description: '',
-      dimension: '50x50x50',
-      price: 299999.00,
-      thumbnailUrl: 'asset/images/sofa.png',
-      imageUrl: [],
-    ),
-    ProductModel(
-      name: 'Double SpringBed',
-      description: '',
-      dimension: '100x100x50',
-      price: 399999.00,
-      thumbnailUrl: 'asset/images/sofabed.png',
-      imageUrl: [],
-    ),
-  ];
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ProductCubit()..loadProducts(),
+      child: Scaffold(
+        body: BlocBuilder<ProductCubit, ProductState>(
+          builder: (context, state) {
+            return state.when(
+              initial: () => const Center(child: CircularProgressIndicator()),
+              loaded: (products) => _Build(products: products),
+            );
+          },
+        ),
+      ),
+    );
+  }
+  // test
+}
+
+class _Build extends StatelessWidget {
+  final List<ProductModel> products;
+  const _Build({required this.products});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
