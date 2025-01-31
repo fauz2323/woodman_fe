@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:woodman_project_fe/main/view/pages/product_detail/cubit/product_detail_cubit.dart';
+import 'package:woodman_project_fe/main/view/widged/my_button_widget.dart';
 
 import '../../../../model/product_model.dart';
 
@@ -136,30 +137,10 @@ class _ProductDetailView extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: GestureDetector(
-            onTap: () {
-              print('add to cart');
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: const Color(0xffFFB200),
-              ),
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Center(
-                  child: Text(
-                    'Add to bag',
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          child: MyButtonWidget(
+            onTap: () {},
+            text: 'Add to bag',
+            radius: 8,
           ),
         ),
       ],
