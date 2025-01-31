@@ -32,13 +32,20 @@ class BerandaView extends StatelessWidget {
       options: CarouselOptions(
         height: 250,
         autoPlay: true,
-        aspectRatio: 16 / 9,
-        enlargeCenterPage: false,
+        autoPlayInterval: const Duration(seconds: 3),
+        autoPlayAnimationDuration: const Duration(milliseconds: 800),
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enlargeCenterPage: true,
+        viewportFraction: 1,
       ),
       items: imgList
-          .map((item) => Center(
-                child: Image.asset(item, fit: BoxFit.cover),
-              ))
+          .map(
+            (item) => Image.asset(
+              item,
+              fit: BoxFit.cover,
+              width: double.infinity,
+            ),
+          )
           .toList(),
     );
   }
