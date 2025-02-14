@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:woodman_project_fe/main/view/pages/edit_profile/edit_profile_view.dart';
 import 'package:woodman_project_fe/main/view/pages/home/home_view.dart';
 import 'package:woodman_project_fe/main/view/pages/product_detail/product_detail_view.dart';
 
@@ -13,5 +14,6 @@ class RouteHelper {
     '/register': (context) => const RegisterView(),
     '/home': (context) => const HomeView(),
     '/detail_product': (context) => const ProductDetailView(), // tempporary
+    '/edit_profile': (context) => EditProfileView(),
   };
 }
