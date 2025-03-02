@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       routes: RouteHelper.routes,
-      initialRoute: '/edit_profile',
+      initialRoute: '/home',
     );
   }
 }
