@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:woodman_project_fe/main/view/pages/checkout_order/checkout_order_view.dart';
 import 'package:woodman_project_fe/main/view/pages/edit_profile/edit_profile_view.dart';
 import 'package:woodman_project_fe/main/view/pages/empty_cart/empty_cart_view.dart';
 import 'package:woodman_project_fe/main/view/pages/home/home_view.dart';
@@ -17,5 +18,6 @@ class RouteHelper {
     '/detail_product': (context) => const ProductDetailView(), // tempporary
     '/edit_profile': (context) => EditProfileView(),
     '/empty_cart': (context) => const EmptyCartView(), // temporary
+    '/checkout_order': (context) => const CheckoutOrderView(), // temporary
   };
 }
