@@ -50,27 +50,31 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDataSource {
     required String name,
     required String phone,
   }) async {
-    Map body = {
-      "email": email,
-      "password": password,
-      "name": name,
-      "phone": phone,
-    };
+    try {
+      Map body = {
+        "email": email,
+        "password": password,
+        "name": name,
+        "phone": phone,
+      };
 
-    final request = await http
-        .post(
-      RequestHelper.register,
-      headers: RequestHelper.getHeaderPost(''),
-      body: body,
-    )
-        .timeout(const Duration(seconds: 10), onTimeout: () {
-      return RequestHelper.timeOutException();
-    });
+      final request = await http
+          .post(
+        RequestHelper.register,
+        headers: RequestHelper.getHeaderPost(''),
+        body: body,
+      )
+          .timeout(const Duration(seconds: 10), onTimeout: () {
+        return RequestHelper.timeOutException();
+      });
 
-    if (request.statusCode == 200) {
-      return Right(RegisterModel.fromJson(json.decode(request.body)));
-    } else {
-      return Left(Failure(message: request.body, code: request.statusCode));
+      if (request.statusCode == 200) {
+        return Right(RegisterModel.fromJson(json.decode(request.body)));
+      } else {
+        return Left(Failure(message: request.body, code: request.statusCode));
+      }
+    } catch (e) {
+      return Left(Failure(message: e.toString(), code: 500));
     }
   }
 }

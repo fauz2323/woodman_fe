@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       routes: RouteHelper.routes,
-      initialRoute: '/register',
+      initialRoute: '/',
     );
   }
 }

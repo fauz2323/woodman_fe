@@ -5,9 +5,9 @@ class RequestHelper {
   static String version = 'v1';
   static String baseUrl = '$getBaseUrl/$version';
 
-  static Uri auth = Uri.parse('$getBaseUrl/auth');
-  static Uri login = Uri.parse('$getBaseUrl/login');
-  static Uri register = Uri.parse('$getBaseUrl/register');
+  static Uri auth = Uri.parse('$baseUrl/auth');
+  static Uri login = Uri.parse('$baseUrl/login');
+  static Uri register = Uri.parse('$baseUrl/register');
 
   static getHeaderGet(var token) {
     Map<String, String> data = {

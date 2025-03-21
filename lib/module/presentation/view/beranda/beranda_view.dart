@@ -42,7 +42,7 @@ class BerandaView extends StatelessWidget {
           .map(
             (item) => Image.asset(
               item,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
               width: double.infinity,
             ),
           )

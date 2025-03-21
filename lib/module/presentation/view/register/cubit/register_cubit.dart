@@ -26,9 +26,30 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String confirmPassword,
   }) async {
     emit(const RegisterState.loading());
-    // Call API
-    emit(const RegisterState.success('token'));
 
-    return 'token';
+    if (password != confirmPassword) {
+      emit(const RegisterState.initial(true));
+      return 'Password not match!!!';
+    }
+
+    // Call API
+    final request = await registerUsecase.register(
+      email: email,
+      name: '$firstName $lastName',
+      password: password,
+      phone: phone,
+    );
+
+    return request.fold(
+      (l) {
+        emit(const RegisterState.initial(true));
+        return l.message;
+      },
+      (r) {
+        var token = r.token;
+        emit(RegisterState.success(token));
+        return 'Success Register';
+      },
+    );
   }
 }

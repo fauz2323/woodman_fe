@@ -37,7 +37,7 @@ class ProfileView extends StatelessWidget {
           const ProfileInfoWidget(
             username: 'Username',
             email: 'example@gmail.com',
-            avatarPath: 'asset/images/profile.jpg',
+            avatarPath: 'asset/images/logo.png',
           ),
           const SizedBox(height: 30),
 

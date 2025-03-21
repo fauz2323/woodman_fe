@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:woodman_project_fe/core/helper/size_helper.dart';
+import 'package:woodman_project_fe/core/helper/token_helper.dart';
 import 'package:woodman_project_fe/di/injection.dart';
 import 'package:woodman_project_fe/module/presentation/view/register/cubit/register_cubit.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_circular_button_widget.dart';
@@ -54,7 +55,11 @@ class _RegisterViewState extends State<RegisterView> {
             state.maybeWhen(
               orElse: () {},
               success: (token) async {
-                Navigator.pushNamed(context, '/home');
+                await TokenHelper().setToken(token);
+
+                if (context.mounted) {
+                  Navigator.pushNamed(context, '/home');
+                }
               },
             );
           },

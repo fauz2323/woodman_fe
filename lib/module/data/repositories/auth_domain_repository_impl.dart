@@ -16,8 +16,18 @@ class AuthDomainRepositoryImpl implements AuthRepository {
       {required String email,
       required String password,
       required String name,
-      required String phone}) {
+      required String phone}) async {
     // TODO: implement register
-    throw UnimplementedError();
+    try {
+      var request = await authRemoteDatasourceImpl.register(
+          email: email, password: password, name: name, phone: phone);
+
+      return request.fold(
+        (l) => Left(l),
+        (r) => Right(r.toEntities()),
+      );
+    } catch (e) {
+      return Left(Failure(message: e.toString(), code: 500));
+    }
   }
 }
