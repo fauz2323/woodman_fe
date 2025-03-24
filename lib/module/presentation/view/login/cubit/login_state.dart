@@ -4,6 +4,6 @@ part of 'login_cubit.dart';
 class LoginState with _$LoginState {
   const factory LoginState.initial(bool activeObsecure) = _Initial;
   const factory LoginState.loading() = _Loading;
-  const factory LoginState.success() = _Success;
+  const factory LoginState.success(String token) = _Success;
   const factory LoginState.error(String message) = _Error;
 }

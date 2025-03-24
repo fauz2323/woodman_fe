@@ -29,6 +29,14 @@ class AuthModel {
       _$AuthModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthModelToJson(this);
+
+  AuthEntities toEntities() => AuthEntities(
+        name: user.name,
+        phone: user.phone,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt,
+      );
 }
 
 @JsonSerializable()
@@ -64,12 +72,4 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
-
-  AuthEntities toEntities() => AuthEntities(
-        name: name,
-        phone: phone,
-        email: email,
-        role: role,
-        createdAt: createdAt,
-      );
 }

@@ -3,24 +3,26 @@ import 'package:injectable/injectable.dart';
 import 'package:woodman_project_fe/core/error/failure_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:woodman_project_fe/core/helper/request_helper.dart';
+import 'package:woodman_project_fe/module/data/model/auth_model.dart';
+import 'package:woodman_project_fe/module/data/model/login_model.dart';
 import 'package:woodman_project_fe/module/data/model/register_model.dart';
 import 'dart:convert';
 
 abstract class AuthRemoteDataSource {
-  Future<Either<Failure, String>> login(String email, String password);
+  Future<Either<Failure, LoginModel>> login(String email, String password);
   Future<Either<Failure, RegisterModel>> register({
     required String email,
     required String password,
     required String name,
     required String phone,
   });
-  Future<Either<Failure, String>> auth(String token);
+  Future<Either<Failure, AuthModel>> auth(String token);
 }
 
 @Injectable()
 class AuthRemoteDatasourceImpl implements AuthRemoteDataSource {
   @override
-  Future<Either<Failure, String>> auth(String token) async {
+  Future<Either<Failure, AuthModel>> auth(String token) async {
     final request = await http
         .get(
       RequestHelper.auth,
@@ -31,16 +33,47 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDataSource {
     });
 
     if (request.statusCode == 200) {
-      return Right(request.body);
+      return Right(AuthModel.fromJson(json.decode(request.body)));
     } else {
       return Left(Failure(message: request.body, code: request.statusCode));
     }
   }
 
   @override
-  Future<Either<Failure, String>> login(String email, String password) async {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<Either<Failure, LoginModel>> login(
+      String email, String password) async {
+    try {
+      print([password]);
+
+      Map body = {
+        "email": email,
+        "password": password,
+      };
+
+      final request = await http
+          .post(
+        RequestHelper.login,
+        headers: RequestHelper.getHeaderPost(''),
+        body: body,
+      )
+          .timeout(const Duration(seconds: 10), onTimeout: () {
+        return RequestHelper.timeOutException();
+      });
+
+      var jsontest = json.decode(request.body);
+
+      print(jsontest);
+
+      if (request.statusCode == 200) {
+        return Right(LoginModel.fromJson(json.decode(request.body)));
+      } else {
+        return Left(Failure(
+            message: json.decode(request.body)['message'],
+            code: request.statusCode));
+      }
+    } catch (e) {
+      return Left(Failure(message: e.toString(), code: 500));
+    }
   }
 
   @override

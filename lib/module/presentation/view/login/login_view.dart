@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:woodman_project_fe/core/helper/size_helper.dart';
+import 'package:woodman_project_fe/core/helper/token_helper.dart';
 import 'package:woodman_project_fe/core/theme/colors_theme.dart';
+import 'package:woodman_project_fe/di/injection.dart';
 import 'package:woodman_project_fe/module/presentation/view/login/cubit/login_cubit.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_circular_button_widget.dart';
 import '../../widged/my_text_field_widget.dart';
@@ -27,7 +29,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(),
+      create: (context) => getIt<LoginCubit>(),
       child: Builder(
         builder: (context) => _build(context),
       ),
@@ -41,8 +43,12 @@ class _LoginViewState extends State<LoginView> {
           listener: (context, state) {
             state.maybeWhen(
               orElse: () {},
-              success: () async {
-                Navigator.pushNamed(context, '/home');
+              success: (token) async {
+                await TokenHelper().setToken(token);
+
+                if (!context.mounted) {
+                  Navigator.pushReplacementNamed(context, '/home');
+                }
               },
             );
           },
@@ -52,6 +58,7 @@ class _LoginViewState extends State<LoginView> {
               loading: () => const Center(
                 child: CircularProgressIndicator(),
               ),
+              success: (token) => _loaded(context, true),
               error: (message) => Center(
                 child: Text(message),
               ),
@@ -136,7 +143,18 @@ class _LoginViewState extends State<LoginView> {
             Align(
               alignment: Alignment.centerRight,
               child: MyCircularButtonWidget(
-                onTap: () {},
+                onTap: () async {
+                  var message = await context.read<LoginCubit>().login(
+                        emailController.text,
+                        passwordController.text,
+                      );
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(message),
+                    ),
+                  );
+                },
                 icon: Icons.arrow_forward,
               ),
             ),

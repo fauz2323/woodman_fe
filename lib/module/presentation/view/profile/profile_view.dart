@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+import 'package:woodman_project_fe/core/helper/token_helper.dart';
 import 'package:woodman_project_fe/core/theme/padding_theme.dart';
+import 'package:woodman_project_fe/di/injection.dart';
+import 'package:woodman_project_fe/module/presentation/view/profile/cubit/profile_cubit.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_info_field_widget.dart';
+import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_profile_info_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_section_title_widget.dart';
 
@@ -12,6 +18,16 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
+    return BlocProvider(
+      create: (context) => getIt<ProfileCubit>(),
+      child: Builder(
+        builder: (context) => _build(context),
+      ),
+    );
+  }
+
+  Widget _build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -23,11 +39,20 @@ class ProfileView extends StatelessWidget {
           ),
         ),
       ),
-      body: _build(),
+      body: BlocConsumer<ProfileCubit, ProfileState>(
+        builder: (conetxt, state) {
+          return state.maybeWhen(
+            orElse: () => Container(),
+            loading: () => const MyLoadingWidget(),
+            loaded: (data) => _loaded(),
+          );
+        },
+        listener: (context, state) {},
+      ),
     );
   }
 
-  Widget _build() {
+  Widget _loaded() {
     return Padding(
       padding: PaddingTheme.defaultPadding,
       child: Column(
@@ -74,7 +99,7 @@ class ProfileView extends StatelessWidget {
                   // Logout Button
                   const SizedBox(height: 20),
                   MyButtonWidget(
-                    onTap: () {
+                    onTap: () async {
                       // Handle logout
                     },
                     text: 'Logout',
