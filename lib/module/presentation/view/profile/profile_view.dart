@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:woodman_project_fe/core/helper/token_helper.dart';
+import 'package:woodman_project_fe/core/theme/colors_theme.dart';
 import 'package:woodman_project_fe/core/theme/padding_theme.dart';
 import 'package:woodman_project_fe/di/injection.dart';
 import 'package:woodman_project_fe/module/presentation/view/profile/cubit/profile_cubit.dart';
@@ -11,6 +12,7 @@ import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.
 import 'package:woodman_project_fe/module/presentation/widged/my_profile_info_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_section_title_widget.dart';
 
+import '../../../../core/theme/text_theme.dart';
 import '../../widged/my_button_widget.dart';
 
 class ProfileView extends StatelessWidget {
@@ -20,7 +22,7 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocProvider(
-      create: (context) => getIt<ProfileCubit>(),
+      create: (context) => getIt<ProfileCubit>()..initial(),
       child: Builder(
         builder: (context) => _build(context),
       ),
@@ -29,22 +31,12 @@ class ProfileView extends StatelessWidget {
 
   Widget _build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Shopping Cart',
-          style: GoogleFonts.poppins(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
       body: BlocConsumer<ProfileCubit, ProfileState>(
         builder: (conetxt, state) {
           return state.maybeWhen(
             orElse: () => Container(),
             loading: () => const MyLoadingWidget(),
-            loaded: (data) => _loaded(),
+            loaded: (data) => _loaded(context),
           );
         },
         listener: (context, state) {},
@@ -52,64 +44,140 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _loaded() {
+  Widget _loaded(BuildContext context) {
     return Padding(
-      padding: PaddingTheme.defaultPadding,
+      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Profile Info
-          const ProfileInfoWidget(
-            username: 'Username',
-            email: 'example@gmail.com',
-            avatarPath: 'asset/images/logo.png',
+          Center(
+            child: Text(
+              "Profile",
+              style: TextStyleThemes.tittleTextStyle,
+            ),
           ),
-          const SizedBox(height: 30),
-
-          // My Order History Button
-          MyButtonWidget(
+          const SizedBox(
+            height: 10,
+          ),
+          Image.asset(
+            'asset/images/logo.png',
+            width: 150,
+            height: 150,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Username",
+            style: TextStyleThemes.subtitleTextStyle.copyWith(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            "Email",
+            style: TextStyleThemes.subtitleTextStyle,
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          ItemListMenuWidget(
             onTap: () {},
-            radius: 50,
-            leftIcon: Icons.shopping_cart_checkout_rounded,
-            text: 'My Order History',
-            rightIcon: Icons.arrow_right_alt_rounded,
+            title: "Edit Profile",
+            icon: Icons.person,
           ),
-          const SizedBox(height: 50),
-
-          // Information Section
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SectionTitleWidget(
-                    title: 'Information',
-                    onEditPressed: () {
-                      // Handle edit information
-                    },
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Information Fields
-                  const InformationFieldWidget(value: 'Name'),
-                  const InformationFieldWidget(value: 'Handphone'),
-                  const InformationFieldWidget(value: 'Address'),
-                  const InformationFieldWidget(value: 'Pos'),
-
-                  // Logout Button
-                  const SizedBox(height: 20),
-                  MyButtonWidget(
-                    onTap: () async {
-                      // Handle logout
-                    },
-                    text: 'Logout',
-                    radius: 8,
-                  ),
-                ],
+          ItemListMenuWidget(
+            onTap: () {},
+            title: "Edit Password",
+            icon: Icons.vpn_key,
+          ),
+          ItemListMenuWidget(
+            onTap: () {},
+            title: "My Orders",
+            icon: Icons.shopping_bag,
+          ),
+          ItemListMenuWidget(
+            onTap: () {},
+            title: "My Address",
+            icon: Icons.location_on,
+          ),
+          const Padding(padding: EdgeInsets.only(top: 35)),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () async {
+                await context.read<ProfileCubit>().logout();
+                if (!context.mounted) return;
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: 30,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: const Text(
+                "Logout",
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ItemListMenuWidget extends StatelessWidget {
+  const ItemListMenuWidget({
+    super.key,
+    required this.title,
+    required this.icon,
+    this.onTap,
+  });
+
+  final String title;
+  final IconData icon;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.all(5),
+        decoration: const BoxDecoration(color: Colors.transparent),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: ColorsTheme.primaryColor,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Icon(
+                icon,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Text(
+              title,
+              style: TextStyleThemes.subtitleTextStyle.copyWith(
+                fontSize: 15,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const Spacer(),
+            const Icon(Icons.arrow_forward_ios),
+          ],
+        ),
       ),
     );
   }

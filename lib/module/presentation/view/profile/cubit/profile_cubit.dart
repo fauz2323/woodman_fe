@@ -10,13 +10,25 @@ part 'profile_state.dart';
 
 @injectable
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit(this._authUsecase) : super(const ProfileState.loading());
-  final AuthUsecase _authUsecase;
+  ProfileCubit(this.authUsecase) : super(const ProfileState.loading());
+  final AuthUsecase authUsecase;
+  final TokenHelper tokenHelper = TokenHelper();
+  late String token;
 
   Future<String> logout() async {
     emit(const ProfileState.loading());
     await TokenHelper().deleteAllToken();
     await Future.delayed(const Duration(seconds: 1));
     return 'Logout';
+  }
+
+  Future initial() async {
+    token = await tokenHelper.getToken();
+    emit(const ProfileState.loading());
+    final result = await authUsecase.auth(token);
+    result.fold(
+      (l) => emit(ProfileState.error(l.message)),
+      (r) => emit(ProfileState.loaded(r)),
+    );
   }
 }

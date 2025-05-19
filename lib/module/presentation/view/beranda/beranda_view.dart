@@ -1,6 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
+import 'package:woodman_project_fe/di/injection.dart';
+import 'package:woodman_project_fe/module/domain/entities/product_list_entities.dart';
+import 'package:woodman_project_fe/module/presentation/view/beranda/cubit/beranda_cubit.dart';
+import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 
 import '../../widged/my_product_card_widget.dart';
 
@@ -11,18 +18,34 @@ class BerandaView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _build(context);
+    return BlocProvider<BerandaCubit>(
+      create: (context) => getIt<BerandaCubit>()..initial(),
+      child: Builder(
+        builder: (context) => _build(context),
+      ),
+    );
   }
 
   Widget _build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _buildCarouselSlider(),
-            _buildProductSection(context),
-          ],
-        ),
+      body: BlocConsumer<BerandaCubit, BerandaState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            orElse: () => Container(),
+            initial: () => Container(),
+            loading: () => const Center(child: MyLoadingWidget()),
+            loaded: (product) => SingleChildScrollView(
+              child: Column(
+                children: [
+                  _buildCarouselSlider(),
+                  const SizedBox(height: 10),
+                  _buildProductSection(context, product),
+                ],
+              ),
+            ),
+          );
+        },
+        listener: (context, state) {},
       ),
     );
   }
@@ -50,16 +73,17 @@ class BerandaView extends StatelessWidget {
     );
   }
 
-  Widget _buildProductSection(BuildContext context) {
+  Widget _buildProductSection(
+      BuildContext context, List<ProductListEntities> product) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Column(
         children: [
           _buildSectionHeader('Product'),
-          _buildProductList(),
+          _buildProductList(product),
           const SizedBox(height: 10),
           _buildSectionHeader('New Product'),
-          _buildProductList(),
+          _buildProductList(product),
         ],
       ),
     );
@@ -76,31 +100,22 @@ class BerandaView extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        TextButton(
-          onPressed: () {},
-          child: Text(
-            'Show all',
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              color: const Color(0xffFFB200),
-            ),
-          ),
-        ),
       ],
     );
   }
 
-  Widget _buildProductList() {
+  Widget _buildProductList(List<ProductListEntities> product) {
     return SizedBox(
       height: 270,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: 4,
+        itemCount: product.length,
         separatorBuilder: (context, index) => const SizedBox(width: 10),
-        itemBuilder: (context, index) => const MyProductCardWidget(
-          imageUrl: 'asset/images/sofabed.png',
-          title: 'Moderen bedsofa',
-          price: 'Rp.2.999.000',
+        itemBuilder: (context, index) => MyProductCardWidget(
+          imageUrl:
+              "https://woodman.projectme.tech/storage/${product[index].image}",
+          title: product[index].name,
+          price: 'Rp. ${NumberFormat('#,##0').format(product[index].price)}',
         ),
       ),
     );

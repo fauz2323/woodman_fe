@@ -45,8 +45,8 @@ class _LoginViewState extends State<LoginView> {
               orElse: () {},
               success: (token) async {
                 await TokenHelper().setToken(token);
-
-                if (!context.mounted) {
+                print("success");
+                if (context.mounted) {
                   Navigator.pushReplacementNamed(context, '/home');
                 }
               },
@@ -81,7 +81,9 @@ class _LoginViewState extends State<LoginView> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/register');
+                },
                 child: const Text(
                   'Sign Up',
                   style: TextStyle(

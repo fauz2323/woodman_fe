@@ -94,7 +94,9 @@ class _RegisterViewState extends State<RegisterView> {
             Align(
               alignment: Alignment.topRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 child: const Text(
                   'Login',
                   style: TextStyle(
