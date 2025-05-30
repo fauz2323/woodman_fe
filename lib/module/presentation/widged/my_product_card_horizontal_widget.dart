@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:woodman_project_fe/module/domain/entities/product_list_entities.dart';
 
 class MyProductCardHorizontalWidget extends StatelessWidget {
   const MyProductCardHorizontalWidget({
@@ -7,7 +9,7 @@ class MyProductCardHorizontalWidget extends StatelessWidget {
     this.onTap,
   });
 
-  final product;
+  final ProductListEntities product;
   final VoidCallback? onTap;
 
   @override
@@ -30,9 +32,10 @@ class MyProductCardHorizontalWidget extends StatelessWidget {
           // Product image
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
-            child: Image.asset(
+            child: CachedNetworkImage(
               width: 170,
-              product.thumbnailUrl,
+              imageUrl:
+                  'https://media.istockphoto.com/id/168760175/id/vektor/sketsa-bunga.jpg?s=612x612&w=0&k=20&c=E4mSlxWo3qsdKij6aLXWKxnN7qkgtRJfL9TEdRJZAQw=',
               fit: BoxFit.contain,
             ),
           ),
@@ -58,7 +61,7 @@ class MyProductCardHorizontalWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    product.dimension,
+                    product.dimension ?? 'No dimension',
                     maxLines: 2,
                     style: const TextStyle(
                       color: Colors.grey,

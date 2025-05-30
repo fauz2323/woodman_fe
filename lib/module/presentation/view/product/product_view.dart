@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:woodman_project_fe/di/injection.dart';
+import 'package:woodman_project_fe/module/domain/entities/product_list_entities.dart';
 import 'package:woodman_project_fe/module/presentation/view/product/cubit/product_cubit.dart';
+import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_product_card_horizontal_widget.dart';
 
 class ProductView extends StatelessWidget {
@@ -10,20 +13,77 @@ class ProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductCubit()..loadProducts(),
-      child: Scaffold(
-        body: BlocBuilder<ProductCubit, ProductState>(
-          builder: (context, state) {
-            return state.when(
-              initial: () => const Center(child: CircularProgressIndicator()),
-              loaded: (products) => _Build(products: products),
-            );
-          },
-        ),
+      create: (context) => getIt<ProductCubit>()..loadProducts(),
+      child: Builder(builder: (context) => _build(context)),
+    );
+  }
+
+  Widget _build(BuildContext context) {
+    return Scaffold(
+      body: BlocBuilder<ProductCubit, ProductState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            orElse: () => const Center(
+              child: Text("Unknown Error has been detected!!!"),
+            ),
+            loading: () => const MyLoadingWidget(),
+            loaded: (product) => _loaded(context, product),
+            error: (message) => Center(
+              child: Text(
+                message,
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
-  // test
+
+  Widget _loaded(BuildContext context, List<ProductListEntities> products) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, bottom: 0, right: 16, top: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Products',
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.search,
+                  size: 32,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+            child: ListView.builder(
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                return MyProductCardHorizontalWidget(
+                  product: products[index],
+                  onTap: () {},
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _Build extends StatelessWidget {
@@ -32,52 +92,7 @@ class _Build extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(left: 16, bottom: 0, right: 16, top: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Products',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.search,
-                    size: 32,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return MyProductCardHorizontalWidget(
-                    product: products[index],
-                    onTap: () {},
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 4),
-        child: _buildFloatingActionButton(),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
+    return const Scaffold();
   }
 
   Widget _buildFloatingActionButton() {

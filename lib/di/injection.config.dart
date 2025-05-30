@@ -26,6 +26,7 @@ import '../module/domain/usecase/product/get_product_list_usecase.dart'
     as _i270;
 import '../module/presentation/view/beranda/cubit/beranda_cubit.dart' as _i580;
 import '../module/presentation/view/login/cubit/login_cubit.dart' as _i41;
+import '../module/presentation/view/product/cubit/product_cubit.dart' as _i707;
 import '../module/presentation/view/profile/cubit/profile_cubit.dart' as _i24;
 import '../module/presentation/view/register/cubit/register_cubit.dart'
     as _i614;
@@ -63,6 +64,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i133.RegisterUsecase(authRepository: gh<_i518.AuthRepository>()));
     gh.factory<_i614.RegisterCubit>(
         () => _i614.RegisterCubit(gh<_i133.RegisterUsecase>()));
+    gh.factory<_i707.ProductCubit>(
+        () => _i707.ProductCubit(gh<_i270.GetProductListUseCase>()));
     gh.factory<_i580.BerandaCubit>(
         () => _i580.BerandaCubit(gh<_i270.GetProductListUseCase>()));
     return this;
