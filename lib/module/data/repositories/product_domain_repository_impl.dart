@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:http/http.dart';
 import 'package:injectable/injectable.dart';
 import 'package:woodman_project_fe/core/error/failure_core.dart';
+import 'package:woodman_project_fe/module/domain/entities/product_detail_entities.dart';
 import 'package:woodman_project_fe/module/domain/entities/product_list_entities.dart';
 import 'package:woodman_project_fe/module/domain/repository/product_repository.dart';
 
@@ -16,6 +18,17 @@ class ProductDomainRepositoryImpl implements ProductRepository {
       String token) async {
     final request = await productRemoteDatasourceImpl.getProductList(token);
     return request.fold(
+      (l) => Left(l),
+      (r) => Right(r.toEntities()),
+    );
+  }
+
+  @override
+  Future<Either<Failure, ProductDetailEntities>> getProductDetail(
+      String token, String uuid) async {
+    final Request =
+        await productRemoteDatasourceImpl.getProductDetail(token, uuid);
+    return Request.fold(
       (l) => Left(l),
       (r) => Right(r.toEntities()),
     );

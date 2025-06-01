@@ -3,5 +3,8 @@ part of 'product_detail_cubit.dart';
 @freezed
 class ProductDetailState with _$ProductDetailState {
   const factory ProductDetailState.initial() = _Initial;
-  const factory ProductDetailState.loaded(String product) = _Loaded;
+  const factory ProductDetailState.loaded(ProductDetailEntities data) = _Loaded;
+  const factory ProductDetailState.error(String message) = _Error;
+  const factory ProductDetailState.loading() = _Loading;
+  const factory ProductDetailState.unautorize() = _Unautorize;
 }

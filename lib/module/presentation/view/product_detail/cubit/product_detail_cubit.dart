@@ -1,15 +1,41 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
+import 'package:woodman_project_fe/core/helper/token_helper.dart';
+import 'package:woodman_project_fe/module/domain/entities/product_detail_entities.dart';
+import 'package:woodman_project_fe/module/domain/usecase/product/get_product_detail_usecase.dart';
 
 part 'product_detail_cubit.freezed.dart';
 part 'product_detail_state.dart';
 
+@injectable
 class ProductDetailCubit extends Cubit<ProductDetailState> {
-  ProductDetailCubit() : super(const ProductDetailState.initial());
+  ProductDetailCubit(this.getProductDetailUsecase)
+      : super(const ProductDetailState.initial());
+  final GetProductDetailUsecase getProductDetailUsecase;
+  final TokenHelper _tokenHelper = TokenHelper();
+  late String token;
 
-  void loadProduct() {
-    var product = 'Product A';
+  void loadProduct(String uuid) async {
+    emit(const ProductDetailState.loading());
+    if (uuid.isEmpty) {
+      emit(const ProductDetailState.error("Product UUID cannot be empty"));
+      return;
+    }
+    token = await _tokenHelper.getToken();
+    final request = await getProductDetailUsecase.call(token, uuid);
 
-    emit(ProductDetailState.loaded(product));
+    request.fold(
+      (failure) => emit(ProductDetailState.error(failure.message)),
+      (product) {
+        if (product.uuid.isEmpty) {
+          emit(const ProductDetailState.error("Product not found"));
+        } else {
+          emit(ProductDetailState.loaded(product));
+        }
+      },
+    );
   }
 }

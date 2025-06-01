@@ -6,56 +6,61 @@ class MyProductCardWidget extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String price;
+  final VoidCallback onTap;
 
   const MyProductCardWidget({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.price,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Container(
-        width: 200,
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Image
-            ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  height: 173,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                )),
-            const SizedBox(height: 10),
-            // Title
-            Text(
-              title,
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Container(
+          width: 200,
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    height: 173,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  )),
+              const SizedBox(height: 10),
+              // Title
+              Text(
+                title,
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 5),
-            // Price
-            Text(
-              price,
-              style: GoogleFonts.poppins(
-                fontSize: 14,
+              const SizedBox(height: 5),
+              // Price
+              Text(
+                price,
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

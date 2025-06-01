@@ -46,7 +46,7 @@ class ProductRemoteDatasourceImpl implements ProductRemoteDatasource {
     };
     final request = await http
         .post(
-      RequestHelper.productList,
+      RequestHelper.productDetail,
       body: body,
       headers: RequestHelper.getHeaderPost(token),
     )

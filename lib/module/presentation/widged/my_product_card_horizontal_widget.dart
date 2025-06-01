@@ -35,7 +35,8 @@ class MyProductCardHorizontalWidget extends StatelessWidget {
             child: CachedNetworkImage(
               width: 170,
               imageUrl:
-                  'https://media.istockphoto.com/id/168760175/id/vektor/sketsa-bunga.jpg?s=612x612&w=0&k=20&c=E4mSlxWo3qsdKij6aLXWKxnN7qkgtRJfL9TEdRJZAQw=',
+                  "https://woodman.projectme.tech/storage/${product.image}" ??
+                      'https://via.placeholder.com/170',
               fit: BoxFit.contain,
             ),
           ),

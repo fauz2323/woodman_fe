@@ -5,6 +5,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
+import 'package:woodman_project_fe/module/domain/entities/product_detail_entities.dart';
+
 part 'product_detail_model.g.dart';
 
 ProductDetailModel productDetailModelFromJson(String str) =>
@@ -29,6 +31,22 @@ class ProductDetailModel {
       _$ProductDetailModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProductDetailModelToJson(this);
+
+  ProductDetailEntities toEntities() => ProductDetailEntities(
+        uuid: detail.uuid,
+        name: detail.name,
+        description: detail.description,
+        price: detail.price,
+        stock: detail.stock,
+        dimension: detail.dimension,
+        weight: detail.weight,
+        height: detail.height,
+        material: detail.material,
+        createdAt: detail.createdAt,
+        images: detail.images
+            .map((e) => ProductDetailImageEntities(image: e.path))
+            .toList(),
+      );
 }
 
 @JsonSerializable()

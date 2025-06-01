@@ -22,11 +22,15 @@ import '../module/domain/repository/product_repository.dart' as _i284;
 import '../module/domain/usecase/auth/auth_usercase.dart' as _i579;
 import '../module/domain/usecase/auth/login_usecase.dart' as _i192;
 import '../module/domain/usecase/auth/register_usecase.dart' as _i133;
+import '../module/domain/usecase/product/get_product_detail_usecase.dart'
+    as _i497;
 import '../module/domain/usecase/product/get_product_list_usecase.dart'
     as _i270;
 import '../module/presentation/view/beranda/cubit/beranda_cubit.dart' as _i580;
 import '../module/presentation/view/login/cubit/login_cubit.dart' as _i41;
 import '../module/presentation/view/product/cubit/product_cubit.dart' as _i707;
+import '../module/presentation/view/product_detail/cubit/product_detail_cubit.dart'
+    as _i320;
 import '../module/presentation/view/profile/cubit/profile_cubit.dart' as _i24;
 import '../module/presentation/view/register/cubit/register_cubit.dart'
     as _i614;
@@ -56,6 +60,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i579.AuthUsecase(gh<_i518.AuthRepository>()));
     gh.factory<_i270.GetProductListUseCase>(
         () => _i270.GetProductListUseCase(gh<_i284.ProductRepository>()));
+    gh.factory<_i497.GetProductDetailUsecase>(
+        () => _i497.GetProductDetailUsecase(gh<_i284.ProductRepository>()));
+    gh.factory<_i320.ProductDetailCubit>(
+        () => _i320.ProductDetailCubit(gh<_i497.GetProductDetailUsecase>()));
     gh.factory<_i41.LoginCubit>(
         () => _i41.LoginCubit(gh<_i192.LoginUseCase>()));
     gh.factory<_i24.ProfileCubit>(

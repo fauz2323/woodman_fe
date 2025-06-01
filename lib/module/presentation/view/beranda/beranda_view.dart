@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 import 'package:woodman_project_fe/di/injection.dart';
 import 'package:woodman_project_fe/module/domain/entities/product_list_entities.dart';
+import 'package:woodman_project_fe/module/presentation/argument/product_detail.argument.dart';
 import 'package:woodman_project_fe/module/presentation/view/beranda/cubit/beranda_cubit.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 
@@ -83,7 +84,7 @@ class BerandaView extends StatelessWidget {
           _buildProductList(product),
           const SizedBox(height: 10),
           _buildSectionHeader('New Product'),
-          _buildProductList(product),
+          _buildProductListNew(product),
         ],
       ),
     );
@@ -109,9 +110,36 @@ class BerandaView extends StatelessWidget {
       height: 270,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: product.length,
+        itemCount: product.length > 5 ? 5 : product.length,
         separatorBuilder: (context, index) => const SizedBox(width: 10),
         itemBuilder: (context, index) => MyProductCardWidget(
+          onTap: () {
+            // Handle product tap
+            Navigator.pushNamed(context, '/detail_product',
+                arguments: ProductDetailArgument(
+                    uuid: product[index].uuid,
+                    productName: product[index].name));
+          },
+          imageUrl:
+              "https://woodman.projectme.tech/storage/${product[index].image}",
+          title: product[index].name,
+          price: 'Rp. ${NumberFormat('#,##0').format(product[index].price)}',
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProductListNew(List<ProductListEntities> product) {
+    return SizedBox(
+      height: 270,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: product.length > 3 ? 3 : product.length,
+        separatorBuilder: (context, index) => const SizedBox(width: 10),
+        itemBuilder: (context, index) => MyProductCardWidget(
+          onTap: () {
+            // Handle product tap
+          },
           imageUrl:
               "https://woodman.projectme.tech/storage/${product[index].image}",
           title: product[index].name,
