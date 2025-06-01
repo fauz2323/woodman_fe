@@ -12,6 +12,12 @@ class RequestHelper {
   static Uri productList = Uri.parse('$baseUrl/product');
   static Uri productDetail = Uri.parse('$baseUrl/detail-product');
 
+  static Uri cart = Uri.parse('$baseUrl/cart');
+  static Uri addCart = Uri.parse('$baseUrl/cart/add');
+
+  static Uri getAddress = Uri.parse('$baseUrl/get-address');
+  static Uri setAddress = Uri.parse('$baseUrl/set-address');
+
   static getHeaderGet(var token) {
     Map<String, String> data = {
       'Content-Type': 'application/json',
