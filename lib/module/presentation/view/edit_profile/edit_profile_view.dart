@@ -12,6 +12,8 @@ class EditProfileView extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
+  final TextEditingController countryController = TextEditingController();
   final TextEditingController posController = TextEditingController();
 
   @override
@@ -30,7 +32,7 @@ class EditProfileView extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: Text(
-          'Edit Profile',
+          'Edit Address',
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -56,64 +58,81 @@ class EditProfileView extends StatelessWidget {
   }
 
   Widget _loaded(BuildContext context) {
-    return Padding(
-      padding: PaddingTheme.defaultPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // profile info
-          const ProfileInfoWidget(
-            username: 'admin',
-            email: 'admin@email.com',
-            avatarPath: 'asset/images/profile.jpg',
-          ),
-          const SizedBox(height: 40),
-          Text(
-            'Edit Profile Information',
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: PaddingTheme.defaultPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // profile info
+            const ProfileInfoWidget(
+              username: 'admin',
+              email: 'admin@email.com',
+              avatarPath: 'asset/images/profile.jpg',
             ),
-          ),
-          const SizedBox(height: 24),
-          // form
-          // name
-          MyTextFieldWidget(
-            controller: nameController,
-            hintText: 'Name',
-            isPassword: false,
-          ),
-          const SizedBox(height: 24),
-          // number
-          MyTextFieldWidget(
-            controller: numberController,
-            hintText: 'Handphone',
-            isPassword: false,
-          ),
-          const SizedBox(height: 24),
-          // number
-          MyTextFieldWidget(
-            controller: addressController,
-            hintText: 'Address',
-            isPassword: false,
-          ),
-          const SizedBox(height: 24),
-          // number
-          MyTextFieldWidget(
-            controller: posController,
-            hintText: 'Pos',
-            isPassword: false,
-          ),
-          const SizedBox(height: 24),
-          // button
-          Align(
-            alignment: Alignment.centerRight,
-            child: MyCircularButtonWidget(
-              onTap: () {},
-              icon: Icons.arrow_forward,
+            const SizedBox(height: 40),
+            Text(
+              'Edit Address Information',
+              style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 24),
+            // form
+            // name
+            MyTextFieldWidget(
+              controller: nameController,
+              hintText: 'Name Receiver',
+              isPassword: false,
+            ),
+            const SizedBox(height: 24),
+            // number
+            MyTextFieldWidget(
+              controller: numberController,
+              hintText: 'Handphone Receiver',
+              isPassword: false,
+            ),
+            const SizedBox(height: 24),
+            // number
+            MyTextFieldWidget(
+              controller: addressController,
+              hintText: 'Address',
+              isPassword: false,
+            ),
+            const SizedBox(height: 24),
+
+            MyTextFieldWidget(
+              controller: addressController,
+              hintText: 'City',
+              isPassword: false,
+            ),
+            const SizedBox(height: 24),
+
+            // number
+            MyTextFieldWidget(
+              controller: addressController,
+              hintText: 'Country',
+              isPassword: false,
+            ),
+            const SizedBox(height: 24),
+            // number
+            MyTextFieldWidget(
+              controller: posController,
+              hintText: 'Postal Code',
+              isPassword: false,
+            ),
+            const SizedBox(height: 24),
+            // button
+            Align(
+              alignment: Alignment.centerRight,
+              child: MyCircularButtonWidget(
+                onTap: () {},
+                icon: Icons.arrow_forward,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

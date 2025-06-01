@@ -82,11 +82,6 @@ class ProfileView extends StatelessWidget {
           ),
           ItemListMenuWidget(
             onTap: () {},
-            title: "Edit Profile",
-            icon: Icons.person,
-          ),
-          ItemListMenuWidget(
-            onTap: () {},
             title: "Edit Password",
             icon: Icons.vpn_key,
           ),
@@ -96,7 +91,9 @@ class ProfileView extends StatelessWidget {
             icon: Icons.shopping_bag,
           ),
           ItemListMenuWidget(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/edit_profile');
+            },
             title: "My Address",
             icon: Icons.location_on,
           ),
