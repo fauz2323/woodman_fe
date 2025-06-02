@@ -1,7 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:woodman_project_fe/di/injection.dart';
+import 'package:woodman_project_fe/module/domain/entities/cart_entities.dart';
 import 'package:woodman_project_fe/module/presentation/view/cart/cubit/cart_cubit.dart';
+import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
@@ -9,33 +13,50 @@ class CartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CartCubit()..loadProducts(),
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Shopping Cart',
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
+      create: (context) => getIt<CartCubit>()..loadCart(),
+      child: Builder(
+        builder: (context) => _build(context),
+      ),
+    );
+  }
+
+  Widget _build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          'Shopping Cart',
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        body: BlocBuilder<CartCubit, CartState>(
-          builder: (context, state) {
-            return state.when(
-              initial: () => const Center(child: CircularProgressIndicator()),
-              loaded: (products, totalPrice, quantity) =>
-                  _loaded(context, products, totalPrice, quantity),
-            );
-          },
-        ),
+      ),
+      body: BlocBuilder<CartCubit, CartState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            orElse: () => const Center(child: Text('No products in cart')),
+            initial: () => const Center(child: CircularProgressIndicator()),
+            loaded: (products, subTotal) =>
+                _loaded(context, products, subTotal),
+            loading: () => const MyLoadingWidget(),
+            error: (message) => Center(
+              child: Text(
+                message,
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 
   Widget _loaded(
-      BuildContext context, List products, double totalPrice, int quantity) {
+      BuildContext context, List<CartEntities> products, num totalPrice) {
     return Column(
       children: [
         Expanded(
@@ -43,7 +64,10 @@ class CartView extends StatelessWidget {
             itemCount: products.length,
             itemBuilder: (context, index) {
               final product = products[index];
-              return _cartCard(context, quantity);
+              return _cartCard(
+                context,
+                product,
+              );
             },
           ),
         ),
@@ -111,7 +135,7 @@ class CartView extends StatelessWidget {
     );
   }
 
-  Widget _cartCard(BuildContext context, int quantity) {
+  Widget _cartCard(BuildContext context, CartEntities product) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -133,8 +157,9 @@ class CartView extends StatelessWidget {
               // Product image
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(
-                  "product.thumbnailUrl",
+                child: CachedNetworkImage(
+                  imageUrl:
+                      "https://woodman.projectme.tech/storage/${product.imageUrl}",
                   width: 150,
                   height: 160,
                   fit: BoxFit.cover,
@@ -149,7 +174,9 @@ class CartView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "product.name",
+                        product.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -166,7 +193,7 @@ class CartView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "product.description",
+                        product.description,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
@@ -177,37 +204,44 @@ class CartView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Rp ',
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: const Color(0xffFFB200),
-                              fontWeight: FontWeight.w600,
+                          SizedBox(
+                            child: Text(
+                              'Rp ${product.price.toStringAsFixed(2)}',
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: const Color(0xffFFB200),
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.remove, size: 20),
-                                onPressed: () => context
-                                    .read<CartCubit>()
-                                    .decreaseQuantity(),
-                              ),
-                              Text(
-                                '$quantity',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 16,
-                                ),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.add, size: 20),
-                                onPressed: () => context
-                                    .read<CartCubit>()
-                                    .increaseQuantity(),
-                              ),
-                            ],
-                          ),
+
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     // IconButton(
+                          //     //   icon: const Icon(Icons.remove, size: 20),
+                          //     //   onPressed: () {},
+                          //     // ),
+                          //     Text(
+                          //       product.quantity.toString(),
+                          //       style: GoogleFonts.poppins(
+                          //         fontSize: 16,
+                          //       ),
+                          //     ),
+                          //     // IconButton(
+                          //     //   icon: const Icon(Icons.add, size: 20),
+                          //     //   onPressed: () {},
+                          //     // ),
+                          //   ],
+                          // ),
                         ],
+                      ),
+                      Text(
+                        "Qty : ${product.quantity}",
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                        ),
                       ),
                     ],
                   ),
@@ -225,7 +259,10 @@ class CartView extends StatelessWidget {
                 color: Colors.red,
                 size: 24,
               ),
-              onPressed: () {},
+              onPressed: () async {
+                final cartCubit = context.read<CartCubit>();
+                await cartCubit.deleteCart(product.uuid);
+              },
             ),
           ),
         ],

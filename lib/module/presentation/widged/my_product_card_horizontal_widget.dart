@@ -86,17 +86,20 @@ class MyProductCardHorizontalWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Container(
-                        width: 32,
-                        height: 32,
-                        decoration: const BoxDecoration(
-                          color: Colors.orange,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.arrow_forward,
-                          color: Colors.white,
-                          size: 20,
+                      GestureDetector(
+                        onTap: onTap,
+                        child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: const BoxDecoration(
+                            color: Colors.orange,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ],

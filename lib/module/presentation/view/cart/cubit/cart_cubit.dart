@@ -1,43 +1,66 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
+import 'package:woodman_project_fe/core/helper/token_helper.dart';
+import 'package:woodman_project_fe/module/domain/entities/cart_entities.dart';
+import 'package:woodman_project_fe/module/domain/usecase/product/cart_usecase.dart';
+import 'package:woodman_project_fe/module/domain/usecase/product/delete_cart_usecase.dart';
 
 part 'cart_cubit.freezed.dart';
 part 'cart_state.dart';
 
+@injectable
 class CartCubit extends Cubit<CartState> {
-  CartCubit() : super(const CartState.initial());
+  CartCubit(this._cartUsecase, this._deleteCartUseCase)
+      : super(const CartState.initial());
+  final CartUsecase _cartUsecase;
+  final DeleteCartUseCase _deleteCartUseCase;
 
-  int quantity = 1;
-  double totalPrice = 0;
+  final TokenHelper _tokenHelper = TokenHelper();
+  late String _token;
+  num totalPrice = 0;
+  late List<CartEntities> _cartEntities;
 
-  void loadProducts() {
-    // Simulasi pengambilan data dari API atau database
-    final products = [];
-
-    // Hitung total harga awal
-    totalPrice = products.fold(0, (sum, product) => sum + product.price);
-    emit(
-        CartState.loaded(products, totalPrice)); // quantity otomatis bernilai 1
+  Future<void> loadCart() async {
+    emit(const CartState.loading());
+    _token = await _tokenHelper.getToken();
+    final result = await _cartUsecase(_token);
+    result.fold(
+      (failure) => emit(CartState.error(failure.message)),
+      (products) {
+        if (products.isEmpty) {
+          emit(const CartState.loaded([], 0));
+        } else {
+          for (var product in products) {
+            totalPrice += product.price * product.quantity;
+          }
+          _cartEntities = products;
+          emit(CartState.loaded(_cartEntities, totalPrice));
+        }
+      },
+    );
   }
 
-  void increaseQuantity() {
-    quantity++;
-    _updateTotalPrice();
-  }
+  Future<void> deleteCart(String uuid) async {
+    emit(const CartState.loading());
+    final result = await _deleteCartUseCase(
+      token: _token,
+      uuid: uuid,
+    );
 
-  void decreaseQuantity() {
-    if (quantity > 1) {
-      quantity--;
-      _updateTotalPrice();
-    }
-  }
-
-  void _updateTotalPrice() {
-    final state = this.state;
-    if (state is _Loaded) {
-      totalPrice = state.products
-          .fold(0, (sum, product) => sum + (product.price * quantity));
-      emit(state.copyWith(totalPrice: totalPrice, quantity: quantity));
-    }
+    result.fold(
+      (failure) => emit(CartState.error(failure.message)),
+      (success) {
+        _cartEntities.removeWhere((item) => item.uuid == uuid);
+        totalPrice = 0;
+        // Recalculate total price after deletion
+        for (var product in _cartEntities) {
+          totalPrice += product.price * product.quantity;
+        }
+        print('Cart after deletion: $_cartEntities');
+        print('Total price after deletion: $totalPrice');
+        emit(CartState.loaded(_cartEntities, totalPrice));
+      },
+    );
   }
 }
