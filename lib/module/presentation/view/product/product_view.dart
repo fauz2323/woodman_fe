@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:woodman_project_fe/di/injection.dart';
 import 'package:woodman_project_fe/module/domain/entities/product_list_entities.dart';
+import 'package:woodman_project_fe/module/presentation/argument/product_detail.argument.dart';
 import 'package:woodman_project_fe/module/presentation/view/product/cubit/product_cubit.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_product_card_horizontal_widget.dart';
@@ -75,7 +76,12 @@ class ProductView extends StatelessWidget {
               itemBuilder: (context, index) {
                 return MyProductCardHorizontalWidget(
                   product: products[index],
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, '/detail_product',
+                        arguments: ProductDetailArgument(
+                            uuid: products[index].uuid,
+                            productName: products[index].name));
+                  },
                 );
               },
             ),

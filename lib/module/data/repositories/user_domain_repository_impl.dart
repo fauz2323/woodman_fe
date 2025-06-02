@@ -23,8 +23,12 @@ class UserDomainRepositoryImpl implements UserRepository {
 
   @override
   Future<Either<Failure, AddressEntities>> setAddress(
-      String token, String uuid) {
-    // TODO: implement setAddress
-    throw UnimplementedError();
+      String token, AddressEntities data) async {
+    final request = await userRemoteDatasource.setAddress(token, data);
+
+    return request.fold(
+      (l) => Left(l),
+      (r) => Right(r.toEntity()),
+    );
   }
 }

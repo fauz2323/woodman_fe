@@ -6,5 +6,5 @@ import '../../../core/error/failure_core.dart';
 abstract class UserRepository {
   Future<Either<Failure, AddressEntities>> getAddress(String token);
   Future<Either<Failure, AddressEntities>> setAddress(
-      String token, String uuid);
+      String token, AddressEntities data);
 }

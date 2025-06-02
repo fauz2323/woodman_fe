@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:injectable/injectable.dart';
 import 'package:woodman_project_fe/di/injection.dart';
 import 'package:woodman_project_fe/module/domain/entities/product_detail_entities.dart';
 import 'package:woodman_project_fe/module/presentation/argument/product_detail.argument.dart';
@@ -21,55 +20,58 @@ class ProductDetailView extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => getIt<ProductDetailCubit>()..loadProduct(args.uuid),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Product Detail',
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        body: BlocBuilder<ProductDetailCubit, ProductDetailState>(
-          builder: (context, state) {
-            return state.maybeWhen(
-              orElse: () => Container(),
-              loading: () => const MyLoadingWidget(),
-              loaded: (product) => _ProductDetailView(product: product),
-              error: (message) => Center(
-                child: Text(
-                  message,
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-              unautorize: () => Center(
-                child: Text(
-                  'Unauthorized access',
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
+      child: Builder(
+        builder: (context) => _build(context),
       ),
     );
   }
-}
 
-class _ProductDetailView extends StatelessWidget {
-  final ProductDetailEntities product;
+  Widget _build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Product Detail',
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: BlocBuilder<ProductDetailCubit, ProductDetailState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            orElse: () => Container(),
+            loading: () => const MyLoadingWidget(),
+            loaded: (product, status) => _loaded(context, product, status),
+            error: (message) => Center(
+              child: Text(
+                message,
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+            unautorize: () => Center(
+              child: Text(
+                'Unauthorized access',
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 
-  const _ProductDetailView({required this.product});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _loaded(
+    BuildContext context,
+    ProductDetailEntities product,
+    bool status,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -198,7 +200,13 @@ class _ProductDetailView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: MyButtonWidget(
-            onTap: () {},
+            onTap: () async {
+              final cubit = context.read<ProductDetailCubit>();
+              final message = await cubit.addCart(product.uuid);
+              ScaffoldMessenger.of(context)
+                ..removeCurrentSnackBar()
+                ..showSnackBar(SnackBar(content: Text(message)));
+            },
             text: 'Add to bag',
             radius: 8,
           ),

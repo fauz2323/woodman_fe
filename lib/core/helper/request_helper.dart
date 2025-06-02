@@ -14,6 +14,7 @@ class RequestHelper {
 
   static Uri cart = Uri.parse('$baseUrl/cart');
   static Uri addCart = Uri.parse('$baseUrl/cart/add');
+  static Uri deleteCart = Uri.parse('$baseUrl/cart/delete');
 
   static Uri getAddress = Uri.parse('$baseUrl/get-address');
   static Uri setAddress = Uri.parse('$baseUrl/set-address');

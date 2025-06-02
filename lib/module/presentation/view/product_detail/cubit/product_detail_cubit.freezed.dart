@@ -19,7 +19,8 @@ mixin _$ProductDetailState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(ProductDetailEntities data) loaded,
+    required TResult Function(ProductDetailEntities data, bool buttonStatus)
+        loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
     required TResult Function() unautorize,
@@ -28,7 +29,7 @@ mixin _$ProductDetailState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(ProductDetailEntities data)? loaded,
+    TResult? Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
     TResult? Function()? unautorize,
@@ -37,7 +38,7 @@ mixin _$ProductDetailState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(ProductDetailEntities data)? loaded,
+    TResult Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
     TResult Function()? unautorize,
@@ -137,7 +138,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(ProductDetailEntities data) loaded,
+    required TResult Function(ProductDetailEntities data, bool buttonStatus)
+        loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
     required TResult Function() unautorize,
@@ -149,7 +151,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(ProductDetailEntities data)? loaded,
+    TResult? Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
     TResult? Function()? unautorize,
@@ -161,7 +163,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(ProductDetailEntities data)? loaded,
+    TResult Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
     TResult Function()? unautorize,
@@ -224,7 +226,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({ProductDetailEntities data});
+  $Res call({ProductDetailEntities data, bool buttonStatus});
 }
 
 /// @nodoc
@@ -241,12 +243,17 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? data = null,
+    Object? buttonStatus = null,
   }) {
     return _then(_$LoadedImpl(
       null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as ProductDetailEntities,
+      null == buttonStatus
+          ? _value.buttonStatus
+          : buttonStatus // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -254,14 +261,16 @@ class __$$LoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl(this.data);
+  const _$LoadedImpl(this.data, this.buttonStatus);
 
   @override
   final ProductDetailEntities data;
+  @override
+  final bool buttonStatus;
 
   @override
   String toString() {
-    return 'ProductDetailState.loaded(data: $data)';
+    return 'ProductDetailState.loaded(data: $data, buttonStatus: $buttonStatus)';
   }
 
   @override
@@ -269,11 +278,13 @@ class _$LoadedImpl implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
-            (identical(other.data, data) || other.data == data));
+            (identical(other.data, data) || other.data == data) &&
+            (identical(other.buttonStatus, buttonStatus) ||
+                other.buttonStatus == buttonStatus));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, data);
+  int get hashCode => Object.hash(runtimeType, data, buttonStatus);
 
   /// Create a copy of ProductDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -287,38 +298,39 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(ProductDetailEntities data) loaded,
+    required TResult Function(ProductDetailEntities data, bool buttonStatus)
+        loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
     required TResult Function() unautorize,
   }) {
-    return loaded(data);
+    return loaded(data, buttonStatus);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(ProductDetailEntities data)? loaded,
+    TResult? Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
     TResult? Function()? unautorize,
   }) {
-    return loaded?.call(data);
+    return loaded?.call(data, buttonStatus);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(ProductDetailEntities data)? loaded,
+    TResult Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
     TResult Function()? unautorize,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(data);
+      return loaded(data, buttonStatus);
     }
     return orElse();
   }
@@ -365,9 +377,11 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements ProductDetailState {
-  const factory _Loaded(final ProductDetailEntities data) = _$LoadedImpl;
+  const factory _Loaded(
+      final ProductDetailEntities data, final bool buttonStatus) = _$LoadedImpl;
 
   ProductDetailEntities get data;
+  bool get buttonStatus;
 
   /// Create a copy of ProductDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -445,7 +459,8 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(ProductDetailEntities data) loaded,
+    required TResult Function(ProductDetailEntities data, bool buttonStatus)
+        loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
     required TResult Function() unautorize,
@@ -457,7 +472,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(ProductDetailEntities data)? loaded,
+    TResult? Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
     TResult? Function()? unautorize,
@@ -469,7 +484,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(ProductDetailEntities data)? loaded,
+    TResult Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
     TResult Function()? unautorize,
@@ -576,7 +591,8 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(ProductDetailEntities data) loaded,
+    required TResult Function(ProductDetailEntities data, bool buttonStatus)
+        loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
     required TResult Function() unautorize,
@@ -588,7 +604,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(ProductDetailEntities data)? loaded,
+    TResult? Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
     TResult? Function()? unautorize,
@@ -600,7 +616,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(ProductDetailEntities data)? loaded,
+    TResult Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
     TResult Function()? unautorize,
@@ -699,7 +715,8 @@ class _$UnautorizeImpl implements _Unautorize {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(ProductDetailEntities data) loaded,
+    required TResult Function(ProductDetailEntities data, bool buttonStatus)
+        loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
     required TResult Function() unautorize,
@@ -711,7 +728,7 @@ class _$UnautorizeImpl implements _Unautorize {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(ProductDetailEntities data)? loaded,
+    TResult? Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
     TResult? Function()? unautorize,
@@ -723,7 +740,7 @@ class _$UnautorizeImpl implements _Unautorize {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(ProductDetailEntities data)? loaded,
+    TResult Function(ProductDetailEntities data, bool buttonStatus)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
     TResult Function()? unautorize,
