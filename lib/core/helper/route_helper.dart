@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:woodman_project_fe/module/presentation/edit_password/edit_password_view.dart';
+import 'package:woodman_project_fe/module/presentation/order_history/order_history_view.dart';
 import 'package:woodman_project_fe/module/presentation/view/checkout_order/checkout_order_view.dart';
 import 'package:woodman_project_fe/module/presentation/view/edit_address/edit_address_view.dart';
 import 'package:woodman_project_fe/module/presentation/view/edit_profile/edit_profile_view.dart';
@@ -23,5 +25,7 @@ class RouteHelper {
     '/checkout_order': (context) => const CheckoutOrderView(), // temporary
     '/review_order': (context) => const ReviewOrderView(), // temporary
     '/edit_address': (context) => EditAddressView(),
+    '/order_history': (context) => const OrderHistoryView(),
+    '/edit_password': (context) => const EditPasswordView(),
   };
 }

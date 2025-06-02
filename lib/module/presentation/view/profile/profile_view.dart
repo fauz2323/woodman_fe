@@ -1,26 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:loading_indicator/loading_indicator.dart';
-import 'package:woodman_project_fe/core/helper/token_helper.dart';
 import 'package:woodman_project_fe/core/theme/colors_theme.dart';
-import 'package:woodman_project_fe/core/theme/padding_theme.dart';
 import 'package:woodman_project_fe/di/injection.dart';
 import 'package:woodman_project_fe/module/presentation/view/profile/cubit/profile_cubit.dart';
-import 'package:woodman_project_fe/module/presentation/widged/my_info_field_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
-import 'package:woodman_project_fe/module/presentation/widged/my_profile_info_widget.dart';
-import 'package:woodman_project_fe/module/presentation/widged/my_section_title_widget.dart';
 
 import '../../../../core/theme/text_theme.dart';
-import '../../widged/my_button_widget.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BlocProvider(
       create: (context) => getIt<ProfileCubit>()..initial(),
       child: Builder(
@@ -81,12 +72,16 @@ class ProfileView extends StatelessWidget {
             height: 40,
           ),
           ItemListMenuWidget(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/edit_password');
+            },
             title: "Edit Password",
             icon: Icons.vpn_key,
           ),
           ItemListMenuWidget(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/order_history');
+            },
             title: "My Orders",
             icon: Icons.shopping_bag,
           ),
