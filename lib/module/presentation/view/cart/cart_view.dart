@@ -7,6 +7,8 @@ import 'package:woodman_project_fe/module/domain/entities/cart_entities.dart';
 import 'package:woodman_project_fe/module/presentation/view/cart/cubit/cart_cubit.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 
+import '../../../../core/helper/request_helper.dart';
+
 class CartView extends StatelessWidget {
   const CartView({super.key});
 
@@ -159,7 +161,7 @@ class CartView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 child: CachedNetworkImage(
                   imageUrl:
-                      "https://woodman.projectme.tech/storage/${product.imageUrl}",
+                      "${RequestHelper.getBaseUrl}/storage/${product.imageUrl}",
                   width: 150,
                   height: 160,
                   fit: BoxFit.cover,

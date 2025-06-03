@@ -10,6 +10,8 @@ import 'package:woodman_project_fe/module/presentation/view/product_detail/cubit
 import 'package:woodman_project_fe/module/presentation/widged/my_button_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 
+import '../../../../core/helper/request_helper.dart';
+
 class ProductDetailView extends StatelessWidget {
   const ProductDetailView({super.key});
 
@@ -97,7 +99,7 @@ class ProductDetailView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                         child: CachedNetworkImage(
                           imageUrl:
-                              "https://woodman.projectme.tech/storage/${imageUrl.image}",
+                              "${RequestHelper.getBaseUrl}/storage/${imageUrl.image}",
                           fit: BoxFit.cover,
                           width: double.infinity,
                         ),

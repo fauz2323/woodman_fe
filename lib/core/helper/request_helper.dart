@@ -1,8 +1,8 @@
 import 'package:http/http.dart';
 
 class RequestHelper {
-  static String getBaseUrl = 'https://woodman.projectme.tech/api';
-  static String version = 'v1';
+  static String getBaseUrl = 'https://woodman.projectme.tech';
+  static String version = 'api/v1';
   static String baseUrl = '$getBaseUrl/$version';
 
   static Uri auth = Uri.parse('$baseUrl/auth');

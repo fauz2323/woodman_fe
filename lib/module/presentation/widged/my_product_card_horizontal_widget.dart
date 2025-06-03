@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:woodman_project_fe/module/domain/entities/product_list_entities.dart';
 
+import '../../../core/helper/request_helper.dart';
+
 class MyProductCardHorizontalWidget extends StatelessWidget {
   const MyProductCardHorizontalWidget({
     super.key,
@@ -35,7 +37,7 @@ class MyProductCardHorizontalWidget extends StatelessWidget {
             child: CachedNetworkImage(
               width: 170,
               imageUrl:
-                  "https://woodman.projectme.tech/storage/${product.image}" ??
+                  "${RequestHelper.getBaseUrl}/storage/${product.image}" ??
                       'https://via.placeholder.com/170',
               fit: BoxFit.contain,
             ),

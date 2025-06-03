@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
+import 'package:woodman_project_fe/core/helper/request_helper.dart';
 import 'package:woodman_project_fe/di/injection.dart';
 import 'package:woodman_project_fe/module/domain/entities/product_list_entities.dart';
 import 'package:woodman_project_fe/module/presentation/argument/product_detail.argument.dart';
@@ -121,7 +122,7 @@ class BerandaView extends StatelessWidget {
                     productName: product[index].name));
           },
           imageUrl:
-              "https://woodman.projectme.tech/storage/${product[index].image}",
+              "${RequestHelper.getBaseUrl}/storage/${product[index].image}",
           title: product[index].name,
           price: 'Rp. ${NumberFormat('#,##0').format(product[index].price)}',
         ),
@@ -141,7 +142,7 @@ class BerandaView extends StatelessWidget {
             // Handle product tap
           },
           imageUrl:
-              "https://woodman.projectme.tech/storage/${product[index].image}",
+              "${RequestHelper.getBaseUrl}/storage/${product[index].image}",
           title: product[index].name,
           price: 'Rp. ${NumberFormat('#,##0').format(product[index].price)}',
         ),
