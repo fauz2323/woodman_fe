@@ -14,7 +14,7 @@ class EditAddressView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Address'),
+        title: const Text('Edit Addresss'),
       ),
       body: Padding(
         padding: PaddingTheme.defaultPadding,

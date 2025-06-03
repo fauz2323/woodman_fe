@@ -19,6 +19,8 @@ class RequestHelper {
   static Uri getAddress = Uri.parse('$baseUrl/get-address');
   static Uri setAddress = Uri.parse('$baseUrl/set-address');
 
+  static Uri editPassword = Uri.parse('$baseUrl/edit-password');
+
   static getHeaderGet(var token) {
     Map<String, String> data = {
       'Content-Type': 'application/json',

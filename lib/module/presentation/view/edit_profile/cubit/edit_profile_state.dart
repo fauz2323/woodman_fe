@@ -6,4 +6,5 @@ class EditProfileState with _$EditProfileState {
   const factory EditProfileState.loading() = _Loading;
   const factory EditProfileState.success() = _Success;
   const factory EditProfileState.error(String message) = _Error;
+  const factory EditProfileState.loaded(AddressEntities data) = _Loaded;
 }

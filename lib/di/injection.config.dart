@@ -32,9 +32,15 @@ import '../module/domain/usecase/product/get_product_detail_usecase.dart'
     as _i497;
 import '../module/domain/usecase/product/get_product_list_usecase.dart'
     as _i270;
+import '../module/domain/usecase/user/change_password_usecase.dart' as _i23;
 import '../module/domain/usecase/user/get_address_usercase.dart' as _i435;
+import '../module/domain/usecase/user/set_address_usecase.dart' as _i895;
 import '../module/presentation/view/beranda/cubit/beranda_cubit.dart' as _i580;
 import '../module/presentation/view/cart/cubit/cart_cubit.dart' as _i718;
+import '../module/presentation/view/edit_password/cubit/edit_password_cubit.dart'
+    as _i532;
+import '../module/presentation/view/edit_profile/cubit/edit_profile_cubit.dart'
+    as _i634;
 import '../module/presentation/view/login/cubit/login_cubit.dart' as _i41;
 import '../module/presentation/view/product/cubit/product_cubit.dart' as _i707;
 import '../module/presentation/view/product_detail/cubit/product_detail_cubit.dart'
@@ -90,8 +96,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i41.LoginCubit(gh<_i192.LoginUseCase>()));
     gh.factory<_i24.ProfileCubit>(
         () => _i24.ProfileCubit(gh<_i579.AuthUsecase>()));
+    gh.factory<_i895.SetAddressUseCase>(
+        () => _i895.SetAddressUseCase(gh<_i511.UserRepository>()));
+    gh.factory<_i23.ChangePasswordUseCase>(
+        () => _i23.ChangePasswordUseCase(gh<_i511.UserRepository>()));
     gh.factory<_i133.RegisterUsecase>(() =>
         _i133.RegisterUsecase(authRepository: gh<_i518.AuthRepository>()));
+    gh.factory<_i532.EditPasswordCubit>(
+        () => _i532.EditPasswordCubit(gh<_i23.ChangePasswordUseCase>()));
     gh.factory<_i320.ProductDetailCubit>(() => _i320.ProductDetailCubit(
           gh<_i497.GetProductDetailUsecase>(),
           gh<_i243.AddCartUsecase>(),
@@ -102,6 +114,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i707.ProductCubit(gh<_i270.GetProductListUseCase>()));
     gh.factory<_i580.BerandaCubit>(
         () => _i580.BerandaCubit(gh<_i270.GetProductListUseCase>()));
+    gh.factory<_i634.EditProfileCubit>(() => _i634.EditProfileCubit(
+          gh<_i435.GetAddressUsercase>(),
+          gh<_i895.SetAddressUseCase>(),
+        ));
     return this;
   }
 }

@@ -2,13 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:woodman_project_fe/core/theme/padding_theme.dart';
+import 'package:woodman_project_fe/di/injection.dart';
+import 'package:woodman_project_fe/module/domain/entities/address_entities.dart';
 import 'package:woodman_project_fe/module/presentation/view/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_circular_button_widget.dart';
+import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_profile_info_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_text_field_widget.dart';
 
-class EditProfileView extends StatelessWidget {
-  EditProfileView({super.key});
+class EditProfileView extends StatefulWidget {
+  const EditProfileView({super.key});
+
+  @override
+  State<EditProfileView> createState() => _EditProfileViewState();
+}
+
+class _EditProfileViewState extends State<EditProfileView> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -17,10 +26,30 @@ class EditProfileView extends StatelessWidget {
   final TextEditingController posController = TextEditingController();
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    nameController.dispose();
+    numberController.dispose();
+    addressController.dispose();
+    cityController.dispose();
+    countryController.dispose();
+    posController.dispose();
+    // Dispose of the controllers to free up resources
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => EditProfileCubit(),
+      create: (context) => getIt<EditProfileCubit>()
+        ..getAddressUsercase().then((data) {
+          nameController.text = data.name;
+          numberController.text = data.phone;
+          addressController.text = data.address;
+          cityController.text = data.city;
+          countryController.text = data.country;
+          posController.text = data.postalCode;
+        }),
       child: Builder(
         builder: (context) => _build(context),
       ),
@@ -32,7 +61,7 @@ class EditProfileView extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: Text(
-          'Edit Address',
+          'Edit Addressx',
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -43,21 +72,20 @@ class EditProfileView extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return state.maybeWhen(
-            initial: () => _loaded(context),
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
+            initial: () => const MyLoadingWidget(),
+            loading: () => const MyLoadingWidget(),
             error: (message) => Center(
               child: Text(message),
             ),
             orElse: () => const SizedBox(),
+            loaded: (data) => _loaded(context, data),
           );
         },
       ),
     );
   }
 
-  Widget _loaded(BuildContext context) {
+  Widget _loaded(BuildContext context, AddressEntities data) {
     return SingleChildScrollView(
       child: Padding(
         padding: PaddingTheme.defaultPadding,
@@ -103,7 +131,7 @@ class EditProfileView extends StatelessWidget {
             const SizedBox(height: 24),
 
             MyTextFieldWidget(
-              controller: addressController,
+              controller: cityController,
               hintText: 'City',
               isPassword: false,
             ),
@@ -111,7 +139,7 @@ class EditProfileView extends StatelessWidget {
 
             // number
             MyTextFieldWidget(
-              controller: addressController,
+              controller: countryController,
               hintText: 'Country',
               isPassword: false,
             ),
@@ -127,7 +155,39 @@ class EditProfileView extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: MyCircularButtonWidget(
-                onTap: () {},
+                onTap: () async {
+                  final address = AddressEntities(
+                    address: addressController.text,
+                    city: cityController.text,
+                    country: countryController.text,
+                    postalCode: posController.text,
+                    name: nameController.text,
+                    phone: numberController.text,
+                  );
+                  final data = await context
+                      .read<EditProfileCubit>()
+                      .updateAddressUsercase(address);
+
+                  if (data.address.isNotEmpty) {
+                    addressController.text = data.address;
+                    cityController.text = data.city;
+                    countryController.text = data.country;
+                    posController.text = data.postalCode;
+                    nameController.text = data.name;
+                    numberController.text = data.phone;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Address updated successfully!'),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Failed to update address!'),
+                      ),
+                    );
+                  }
+                },
                 icon: Icons.arrow_forward,
               ),
             ),
