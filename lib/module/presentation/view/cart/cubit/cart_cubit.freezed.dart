@@ -22,6 +22,7 @@ mixin _$CartState {
     required TResult Function(List<CartEntities> product, num subTotal) loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
+    required TResult Function(MakeOrderEntities data) success,
     required TResult Function() unautorize,
   }) =>
       throw _privateConstructorUsedError;
@@ -31,6 +32,7 @@ mixin _$CartState {
     TResult? Function(List<CartEntities> product, num subTotal)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
+    TResult? Function(MakeOrderEntities data)? success,
     TResult? Function()? unautorize,
   }) =>
       throw _privateConstructorUsedError;
@@ -40,6 +42,7 @@ mixin _$CartState {
     TResult Function(List<CartEntities> product, num subTotal)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
+    TResult Function(MakeOrderEntities data)? success,
     TResult Function()? unautorize,
     required TResult orElse(),
   }) =>
@@ -50,6 +53,7 @@ mixin _$CartState {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
     required TResult Function(_Unautorize value) unautorize,
   }) =>
       throw _privateConstructorUsedError;
@@ -59,6 +63,7 @@ mixin _$CartState {
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Unautorize value)? unautorize,
   }) =>
       throw _privateConstructorUsedError;
@@ -68,6 +73,7 @@ mixin _$CartState {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
     TResult Function(_Unautorize value)? unautorize,
     required TResult orElse(),
   }) =>
@@ -139,6 +145,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(List<CartEntities> product, num subTotal) loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
+    required TResult Function(MakeOrderEntities data) success,
     required TResult Function() unautorize,
   }) {
     return initial();
@@ -151,6 +158,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(List<CartEntities> product, num subTotal)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
+    TResult? Function(MakeOrderEntities data)? success,
     TResult? Function()? unautorize,
   }) {
     return initial?.call();
@@ -163,6 +171,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(List<CartEntities> product, num subTotal)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
+    TResult Function(MakeOrderEntities data)? success,
     TResult Function()? unautorize,
     required TResult orElse(),
   }) {
@@ -179,6 +188,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
     required TResult Function(_Unautorize value) unautorize,
   }) {
     return initial(this);
@@ -191,6 +201,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Unautorize value)? unautorize,
   }) {
     return initial?.call(this);
@@ -203,6 +214,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
     TResult Function(_Unautorize value)? unautorize,
     required TResult orElse(),
   }) {
@@ -306,6 +318,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(List<CartEntities> product, num subTotal) loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
+    required TResult Function(MakeOrderEntities data) success,
     required TResult Function() unautorize,
   }) {
     return loaded(product, subTotal);
@@ -318,6 +331,7 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function(List<CartEntities> product, num subTotal)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
+    TResult? Function(MakeOrderEntities data)? success,
     TResult? Function()? unautorize,
   }) {
     return loaded?.call(product, subTotal);
@@ -330,6 +344,7 @@ class _$LoadedImpl implements _Loaded {
     TResult Function(List<CartEntities> product, num subTotal)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
+    TResult Function(MakeOrderEntities data)? success,
     TResult Function()? unautorize,
     required TResult orElse(),
   }) {
@@ -346,6 +361,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
     required TResult Function(_Unautorize value) unautorize,
   }) {
     return loaded(this);
@@ -358,6 +374,7 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Unautorize value)? unautorize,
   }) {
     return loaded?.call(this);
@@ -370,6 +387,7 @@ class _$LoadedImpl implements _Loaded {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
     TResult Function(_Unautorize value)? unautorize,
     required TResult orElse(),
   }) {
@@ -466,6 +484,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(List<CartEntities> product, num subTotal) loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
+    required TResult Function(MakeOrderEntities data) success,
     required TResult Function() unautorize,
   }) {
     return error(message);
@@ -478,6 +497,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(List<CartEntities> product, num subTotal)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
+    TResult? Function(MakeOrderEntities data)? success,
     TResult? Function()? unautorize,
   }) {
     return error?.call(message);
@@ -490,6 +510,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(List<CartEntities> product, num subTotal)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
+    TResult Function(MakeOrderEntities data)? success,
     TResult Function()? unautorize,
     required TResult orElse(),
   }) {
@@ -506,6 +527,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
     required TResult Function(_Unautorize value) unautorize,
   }) {
     return error(this);
@@ -518,6 +540,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Unautorize value)? unautorize,
   }) {
     return error?.call(this);
@@ -530,6 +553,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
     TResult Function(_Unautorize value)? unautorize,
     required TResult orElse(),
   }) {
@@ -597,6 +621,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(List<CartEntities> product, num subTotal) loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
+    required TResult Function(MakeOrderEntities data) success,
     required TResult Function() unautorize,
   }) {
     return loading();
@@ -609,6 +634,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(List<CartEntities> product, num subTotal)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
+    TResult? Function(MakeOrderEntities data)? success,
     TResult? Function()? unautorize,
   }) {
     return loading?.call();
@@ -621,6 +647,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(List<CartEntities> product, num subTotal)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
+    TResult Function(MakeOrderEntities data)? success,
     TResult Function()? unautorize,
     required TResult orElse(),
   }) {
@@ -637,6 +664,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
     required TResult Function(_Unautorize value) unautorize,
   }) {
     return loading(this);
@@ -649,6 +677,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Unautorize value)? unautorize,
   }) {
     return loading?.call(this);
@@ -661,6 +690,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
     TResult Function(_Unautorize value)? unautorize,
     required TResult orElse(),
   }) {
@@ -673,6 +703,170 @@ class _$LoadingImpl implements _Loading {
 
 abstract class _Loading implements CartState {
   const factory _Loading() = _$LoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$SuccessImplCopyWith<$Res> {
+  factory _$$SuccessImplCopyWith(
+          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
+      __$$SuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({MakeOrderEntities data});
+}
+
+/// @nodoc
+class __$$SuccessImplCopyWithImpl<$Res>
+    extends _$CartStateCopyWithImpl<$Res, _$SuccessImpl>
+    implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(
+      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CartState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_$SuccessImpl(
+      null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as MakeOrderEntities,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SuccessImpl implements _Success {
+  const _$SuccessImpl(this.data);
+
+  @override
+  final MakeOrderEntities data;
+
+  @override
+  String toString() {
+    return 'CartState.success(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessImpl &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, data);
+
+  /// Create a copy of CartState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<CartEntities> product, num subTotal) loaded,
+    required TResult Function(String message) error,
+    required TResult Function() loading,
+    required TResult Function(MakeOrderEntities data) success,
+    required TResult Function() unautorize,
+  }) {
+    return success(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(List<CartEntities> product, num subTotal)? loaded,
+    TResult? Function(String message)? error,
+    TResult? Function()? loading,
+    TResult? Function(MakeOrderEntities data)? success,
+    TResult? Function()? unautorize,
+  }) {
+    return success?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<CartEntities> product, num subTotal)? loaded,
+    TResult Function(String message)? error,
+    TResult Function()? loading,
+    TResult Function(MakeOrderEntities data)? success,
+    TResult Function()? unautorize,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Unautorize value) unautorize,
+  }) {
+    return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Unautorize value)? unautorize,
+  }) {
+    return success?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_Unautorize value)? unautorize,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Success implements CartState {
+  const factory _Success(final MakeOrderEntities data) = _$SuccessImpl;
+
+  MakeOrderEntities get data;
+
+  /// Create a copy of CartState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -720,6 +914,7 @@ class _$UnautorizeImpl implements _Unautorize {
     required TResult Function(List<CartEntities> product, num subTotal) loaded,
     required TResult Function(String message) error,
     required TResult Function() loading,
+    required TResult Function(MakeOrderEntities data) success,
     required TResult Function() unautorize,
   }) {
     return unautorize();
@@ -732,6 +927,7 @@ class _$UnautorizeImpl implements _Unautorize {
     TResult? Function(List<CartEntities> product, num subTotal)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? loading,
+    TResult? Function(MakeOrderEntities data)? success,
     TResult? Function()? unautorize,
   }) {
     return unautorize?.call();
@@ -744,6 +940,7 @@ class _$UnautorizeImpl implements _Unautorize {
     TResult Function(List<CartEntities> product, num subTotal)? loaded,
     TResult Function(String message)? error,
     TResult Function()? loading,
+    TResult Function(MakeOrderEntities data)? success,
     TResult Function()? unautorize,
     required TResult orElse(),
   }) {
@@ -760,6 +957,7 @@ class _$UnautorizeImpl implements _Unautorize {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
     required TResult Function(_Unautorize value) unautorize,
   }) {
     return unautorize(this);
@@ -772,6 +970,7 @@ class _$UnautorizeImpl implements _Unautorize {
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Unautorize value)? unautorize,
   }) {
     return unautorize?.call(this);
@@ -784,6 +983,7 @@ class _$UnautorizeImpl implements _Unautorize {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
     TResult Function(_Unautorize value)? unautorize,
     required TResult orElse(),
   }) {

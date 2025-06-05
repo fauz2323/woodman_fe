@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_button_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_divider_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_text_field_widget.dart';
-import 'package:woodman_project_fe/module/presentation/view/checkout_order/cubit/checkout_order_cubit.dart';
+import 'package:woodman_project_fe/module/presentation/view/checkout_order-x/cubit/checkout_order_cubit.dart';
 
 class CheckoutOrderView extends StatelessWidget {
   const CheckoutOrderView({super.key});
@@ -20,12 +20,6 @@ class CheckoutOrderView extends StatelessWidget {
   }
 
   Widget _build(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController phoneController = TextEditingController();
-    final TextEditingController addressController = TextEditingController();
-    final TextEditingController countryController = TextEditingController();
-    final TextEditingController posNumberController = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -45,11 +39,6 @@ class CheckoutOrderView extends StatelessWidget {
           return state.maybeWhen(
             initial: () => _loaded(
               context,
-              nameController,
-              phoneController,
-              addressController,
-              countryController,
-              posNumberController,
             ),
             loading: () => const Center(
               child: CircularProgressIndicator(),
@@ -66,11 +55,6 @@ class CheckoutOrderView extends StatelessWidget {
 
   Widget _loaded(
     BuildContext context,
-    TextEditingController nameController,
-    TextEditingController phoneController,
-    TextEditingController addressController,
-    TextEditingController countryController,
-    TextEditingController posNumberController,
   ) {
     return SingleChildScrollView(
       child: Padding(
@@ -78,7 +62,7 @@ class CheckoutOrderView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildOrderSummaryHeader('Order Summary'),
+            _buildOrderSummaryHeader('Order Summarys'),
             const SizedBox(height: 16),
             _buildProductRow('Product', 'Modern Chair'),
             const SizedBox(height: 8),
@@ -104,31 +88,6 @@ class CheckoutOrderView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            MyTextFieldWidget(
-              controller: nameController,
-              hintText: 'Your name',
-              isPassword: false,
-            ),
-            MyTextFieldWidget(
-              controller: phoneController,
-              hintText: 'Phone',
-              isPassword: false,
-            ),
-            MyTextFieldWidget(
-              controller: addressController,
-              hintText: 'Address',
-              isPassword: false,
-            ),
-            MyTextFieldWidget(
-              controller: countryController,
-              hintText: 'Country',
-              isPassword: false,
-            ),
-            MyTextFieldWidget(
-              controller: posNumberController,
-              hintText: 'Pos Number',
-              isPassword: false,
-            ),
             const SizedBox(height: 32),
             MyButtonWidget(
               onTap: () {

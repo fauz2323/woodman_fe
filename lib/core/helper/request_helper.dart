@@ -21,6 +21,8 @@ class RequestHelper {
 
   static Uri editPassword = Uri.parse('$baseUrl/edit-password');
 
+  static Uri makeOrder = Uri.parse('$baseUrl/make-order');
+
   static getHeaderGet(var token) {
     Map<String, String> data = {
       'Content-Type': 'application/json',

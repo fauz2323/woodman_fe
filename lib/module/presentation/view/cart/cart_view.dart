@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:injectable/injectable.dart';
 import 'package:woodman_project_fe/di/injection.dart';
 import 'package:woodman_project_fe/module/domain/entities/cart_entities.dart';
+import 'package:woodman_project_fe/module/presentation/argument/checkout.argument.dart';
 import 'package:woodman_project_fe/module/presentation/view/cart/cubit/cart_cubit.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 
@@ -34,7 +36,7 @@ class CartView extends StatelessWidget {
           ),
         ),
       ),
-      body: BlocBuilder<CartCubit, CartState>(
+      body: BlocConsumer<CartCubit, CartState>(
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () => const Center(child: Text('No products in cart')),
@@ -51,6 +53,20 @@ class CartView extends StatelessWidget {
                 ),
               ),
             ),
+          );
+        },
+        listener: (context, state) {
+          state.maybeWhen(
+            orElse: () {},
+            error: (message) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(message),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            },
+            success: (data) {},
           );
         },
       ),
@@ -115,6 +131,21 @@ class CartView extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     // Handle checkout
+                    if (products.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Your cart is empty'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    Navigator.pushNamed(context, '/review_order',
+                        arguments: CheckOutArgument(
+                            productName:
+                                products.map((data) => data.name).toString(),
+                            productPrice: totalPrice));
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),

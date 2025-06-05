@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:woodman_project_fe/di/injection.dart';
+import 'package:woodman_project_fe/module/domain/entities/address_entities.dart';
+import 'package:woodman_project_fe/module/presentation/argument/checkout.argument.dart';
+import 'package:woodman_project_fe/module/presentation/view/review_order/cubit/review_order_cubit.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_button_widget.dart';
-
-import '../checkout_order/cubit/checkout_order_cubit.dart';
+import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 
 class ReviewOrderView extends StatelessWidget {
   const ReviewOrderView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as CheckOutArgument;
+
     return BlocProvider(
-      create: (context) => CheckoutOrderCubit(),
+      create: (context) => getIt<ReviewOrderCubit>()..getAddress(args),
       child: Builder(
         builder: (context) => _build(context),
       ),
@@ -19,12 +24,6 @@ class ReviewOrderView extends StatelessWidget {
   }
 
   Widget _build(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController phoneController = TextEditingController();
-    final TextEditingController addressController = TextEditingController();
-    final TextEditingController countryController = TextEditingController();
-    final TextEditingController posNumberController = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -36,25 +35,33 @@ class ReviewOrderView extends StatelessWidget {
           ),
         ),
       ),
-      body: BlocConsumer<CheckoutOrderCubit, CheckoutOrderState>(
+      body: BlocConsumer<ReviewOrderCubit, ReviewOrderState>(
         listener: (context, state) {
-          // Handle state changes if needed
+          state.maybeWhen(
+              orElse: () {},
+              success: () {
+                Navigator.pop(context);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                        'Order placed successfully!, please upload your payment proof'),
+                    duration: Duration(seconds: 2),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              });
         },
         builder: (context, state) {
           return state.maybeWhen(
-            initial: () => _loaded(
-              context,
-              nameController,
-              phoneController,
-              addressController,
-              countryController,
-              posNumberController,
-            ),
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
+            loading: () => const MyLoadingWidget(),
             error: (message) => Center(
               child: Text(message),
+            ),
+            loaded: (address, data) => _loaded(
+              context,
+              data,
+              address,
             ),
             orElse: () => const SizedBox(),
           );
@@ -65,11 +72,8 @@ class ReviewOrderView extends StatelessWidget {
 
   Widget _loaded(
     BuildContext context,
-    TextEditingController nameController,
-    TextEditingController phoneController,
-    TextEditingController addressController,
-    TextEditingController countryController,
-    TextEditingController posNumberController,
+    CheckOutArgument data,
+    AddressEntities address,
   ) {
     return Column(
       children: [
@@ -86,19 +90,17 @@ class ReviewOrderView extends StatelessWidget {
                     children: [
                       _buildOrderSummaryHeader('Review Order'),
                       const SizedBox(height: 16),
-                      _buildProductRow('Product', 'Modern Chair'),
+                      _buildProductRow('Product', data.productName),
                       const SizedBox(height: 8),
-                      _buildDetailRow('Count', 'x2'),
-                      _buildDetailRow('Color', 'White'),
-                      _buildDetailRow('Price', 'Rp 1,499,999.00'),
+                      _buildDetailRow('Price', 'Rp ${data.productPrice}'),
                       const SizedBox(height: 16),
-                      _buildTotalRow('Sub Total', 'Rp 2,999,999.00',
+                      _buildTotalRow('Sub Total', 'Rp ${data.productPrice}',
                           isBold: true),
                       const SizedBox(height: 16),
                       _buildOrderSummaryHeader('Shipping Address'),
                       const SizedBox(height: 16),
-                      _buildDetailRow('Name', 'John Doe'),
-                      _buildDetailRow('Phone', '08123456789'),
+                      _buildDetailRow('Name', address.name ?? 'N/A'),
+                      _buildDetailRow('Phone', address.phone ?? 'N/A'),
                       // label: Address
                       Text('Address:',
                           style: GoogleFonts.poppins(
@@ -106,7 +108,7 @@ class ReviewOrderView extends StatelessWidget {
                       // Value: Address
                       const SizedBox(height: 4),
                       Text(
-                        'Jl. Raya Bogor No. 123, RT 01/02, Bogor, Jawa Barat',
+                        address.address ?? 'N/A',
                         style: GoogleFonts.poppins(fontSize: 16),
                       ),
                     ],
@@ -120,9 +122,9 @@ class ReviewOrderView extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: MyButtonWidget(
             onTap: () {
-              // Handle next button tap
+              context.read<ReviewOrderCubit>().makeOrder();
             },
-            text: 'Next',
+            text: 'Make Order',
             radius: 8,
           ),
         ),

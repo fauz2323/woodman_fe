@@ -12,19 +12,23 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../module/data/datasource/remote/auth_remote_datasource.dart' as _i558;
+import '../module/data/datasource/remote/order_remote_datasource.dart' as _i15;
 import '../module/data/datasource/remote/product_remote_datasource.dart'
     as _i130;
 import '../module/data/datasource/remote/user_remote_datasource.dart' as _i611;
 import '../module/data/repositories/auth_domain_repository_impl.dart' as _i677;
+import '../module/data/repositories/order_domain_repository_impl.dart' as _i121;
 import '../module/data/repositories/product_domain_repository_impl.dart'
     as _i964;
 import '../module/data/repositories/user_domain_repository_impl.dart' as _i485;
 import '../module/domain/repository/auth_repository.dart' as _i518;
+import '../module/domain/repository/order_repository.dart' as _i695;
 import '../module/domain/repository/product_repository.dart' as _i284;
 import '../module/domain/repository/user_repository.dart' as _i511;
 import '../module/domain/usecase/auth/auth_usercase.dart' as _i579;
 import '../module/domain/usecase/auth/login_usecase.dart' as _i192;
 import '../module/domain/usecase/auth/register_usecase.dart' as _i133;
+import '../module/domain/usecase/order/make_order_usecase.dart' as _i217;
 import '../module/domain/usecase/product/add_cart_usecase.dart' as _i243;
 import '../module/domain/usecase/product/cart_usecase.dart' as _i437;
 import '../module/domain/usecase/product/delete_cart_usecase.dart' as _i758;
@@ -48,6 +52,8 @@ import '../module/presentation/view/product_detail/cubit/product_detail_cubit.da
 import '../module/presentation/view/profile/cubit/profile_cubit.dart' as _i24;
 import '../module/presentation/view/register/cubit/register_cubit.dart'
     as _i614;
+import '../module/presentation/view/review_order/cubit/review_order_cubit.dart'
+    as _i635;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -66,8 +72,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i558.AuthRemoteDatasourceImpl());
     gh.factory<_i611.UserRemoteDatasourceImpl>(
         () => _i611.UserRemoteDatasourceImpl());
+    gh.factory<_i15.OrderRemoteDataSourceImpl>(
+        () => _i15.OrderRemoteDataSourceImpl());
     gh.factory<_i284.ProductRepository>(() => _i964.ProductDomainRepositoryImpl(
         productRemoteDatasourceImpl: gh<_i130.ProductRemoteDatasourceImpl>()));
+    gh.factory<_i695.OrderRepository>(() =>
+        _i121.OrderDomainRepositoryImpl(gh<_i15.OrderRemoteDataSourceImpl>()));
     gh.factory<_i518.AuthRepository>(() => _i677.AuthDomainRepositoryImpl(
         authRemoteDatasourceImpl: gh<_i558.AuthRemoteDatasourceImpl>()));
     gh.factory<_i511.UserRepository>(() => _i485.UserDomainRepositoryImpl(
@@ -88,10 +98,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i758.DeleteCartUseCase(gh<_i284.ProductRepository>()));
     gh.factory<_i435.GetAddressUsercase>(
         () => _i435.GetAddressUsercase(gh<_i511.UserRepository>()));
-    gh.factory<_i718.CartCubit>(() => _i718.CartCubit(
-          gh<_i437.CartUsecase>(),
-          gh<_i758.DeleteCartUseCase>(),
-        ));
     gh.factory<_i41.LoginCubit>(
         () => _i41.LoginCubit(gh<_i192.LoginUseCase>()));
     gh.factory<_i24.ProfileCubit>(
@@ -100,10 +106,21 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i895.SetAddressUseCase(gh<_i511.UserRepository>()));
     gh.factory<_i23.ChangePasswordUseCase>(
         () => _i23.ChangePasswordUseCase(gh<_i511.UserRepository>()));
+    gh.factory<_i217.MakeOrderUsecase>(
+        () => _i217.MakeOrderUsecase(gh<_i695.OrderRepository>()));
     gh.factory<_i133.RegisterUsecase>(() =>
         _i133.RegisterUsecase(authRepository: gh<_i518.AuthRepository>()));
     gh.factory<_i532.EditPasswordCubit>(
         () => _i532.EditPasswordCubit(gh<_i23.ChangePasswordUseCase>()));
+    gh.factory<_i635.ReviewOrderCubit>(() => _i635.ReviewOrderCubit(
+          gh<_i435.GetAddressUsercase>(),
+          gh<_i217.MakeOrderUsecase>(),
+        ));
+    gh.factory<_i718.CartCubit>(() => _i718.CartCubit(
+          gh<_i437.CartUsecase>(),
+          gh<_i758.DeleteCartUseCase>(),
+          gh<_i217.MakeOrderUsecase>(),
+        ));
     gh.factory<_i320.ProductDetailCubit>(() => _i320.ProductDetailCubit(
           gh<_i497.GetProductDetailUsecase>(),
           gh<_i243.AddCartUsecase>(),

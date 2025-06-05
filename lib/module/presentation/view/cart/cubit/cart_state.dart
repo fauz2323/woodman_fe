@@ -8,5 +8,6 @@ class CartState with _$CartState {
 
   const factory CartState.error(String message) = _Error;
   const factory CartState.loading() = _Loading;
+  const factory CartState.success(MakeOrderEntities data) = _Success;
   const factory CartState.unautorize() = _Unautorize;
 }
