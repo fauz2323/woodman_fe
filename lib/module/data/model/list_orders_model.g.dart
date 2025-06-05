@@ -27,6 +27,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) => Order(
       items: (json['items'] as List<dynamic>)
           .map((e) => Item.fromJson(e as Map<String, dynamic>))
           .toList(),
+      createdAt: DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
@@ -34,6 +35,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'status': instance.status,
       'total_price': instance.totalPrice,
       'items': instance.items,
+      'created_at': instance.createdAt.toIso8601String(),
     };
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(

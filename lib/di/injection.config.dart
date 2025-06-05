@@ -28,6 +28,7 @@ import '../module/domain/repository/user_repository.dart' as _i511;
 import '../module/domain/usecase/auth/auth_usercase.dart' as _i579;
 import '../module/domain/usecase/auth/login_usecase.dart' as _i192;
 import '../module/domain/usecase/auth/register_usecase.dart' as _i133;
+import '../module/domain/usecase/order/list_order_usecase.dart' as _i212;
 import '../module/domain/usecase/order/make_order_usecase.dart' as _i217;
 import '../module/domain/usecase/product/add_cart_usecase.dart' as _i243;
 import '../module/domain/usecase/product/cart_usecase.dart' as _i437;
@@ -46,6 +47,8 @@ import '../module/presentation/view/edit_password/cubit/edit_password_cubit.dart
 import '../module/presentation/view/edit_profile/cubit/edit_profile_cubit.dart'
     as _i634;
 import '../module/presentation/view/login/cubit/login_cubit.dart' as _i41;
+import '../module/presentation/view/order_history/cubit/order_history_cubit.dart'
+    as _i1026;
 import '../module/presentation/view/product/cubit/product_cubit.dart' as _i707;
 import '../module/presentation/view/product_detail/cubit/product_detail_cubit.dart'
     as _i320;
@@ -125,12 +128,16 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i497.GetProductDetailUsecase>(),
           gh<_i243.AddCartUsecase>(),
         ));
+    gh.factory<_i212.ListOrderUseCase>(
+        () => _i212.ListOrderUseCase(gh<_i695.OrderRepository>()));
     gh.factory<_i614.RegisterCubit>(
         () => _i614.RegisterCubit(gh<_i133.RegisterUsecase>()));
     gh.factory<_i707.ProductCubit>(
         () => _i707.ProductCubit(gh<_i270.GetProductListUseCase>()));
     gh.factory<_i580.BerandaCubit>(
         () => _i580.BerandaCubit(gh<_i270.GetProductListUseCase>()));
+    gh.factory<_i1026.OrderHistoryCubit>(
+        () => _i1026.OrderHistoryCubit(gh<_i212.ListOrderUseCase>()));
     gh.factory<_i634.EditProfileCubit>(() => _i634.EditProfileCubit(
           gh<_i435.GetAddressUsercase>(),
           gh<_i895.SetAddressUseCase>(),

@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-enum OrderStatus {
-  delivered,
-  failed,
-  // Tambahkan status lain jika perlu
-}
-
 class MyOrderCardHistory extends StatelessWidget {
   final String orderNumber;
   final String paymentMethod;
-  final OrderStatus status;
+  final String status;
   final String dateTime;
   final String imageUrl;
   final VoidCallback? onTap;
@@ -27,20 +21,26 @@ class MyOrderCardHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String statusText;
-    Color statusColor;
-    Color dateColor;
+    String statusText = '-';
+    Color statusColor = Colors.black;
+    Color dateColor = Colors.black;
 
     switch (status) {
-      case OrderStatus.delivered:
-        statusText = 'Delivered On';
+      case 'pending':
+        statusText = 'Pending';
         statusColor = Colors.green[700]!;
         dateColor = Colors.black54;
         break;
-      case OrderStatus.failed:
+      case 'failed':
         statusText = 'Failed';
         statusColor = Colors.red[700]!;
         dateColor = Colors.red[700]!;
+        break;
+
+      case 'waiting':
+        statusText = 'Failed';
+        statusColor = Colors.yellow;
+        dateColor = Colors.black54;
         break;
     }
 
@@ -87,7 +87,7 @@ class MyOrderCardHistory extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 13.0,
                               color: dateColor,
-                              fontWeight: status == OrderStatus.failed
+                              fontWeight: status == 'failed'
                                   ? FontWeight.w500
                                   : FontWeight.normal,
                             ),
@@ -141,6 +141,8 @@ class MyOrderCardHistory extends StatelessWidget {
         const SizedBox(height: 2.0),
         Text(
           value,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
           style: GoogleFonts.poppins(
             fontSize: 15.0,
             color: Colors.black87,

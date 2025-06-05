@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:woodman_project_fe/core/error/failure_core.dart';
 import 'package:woodman_project_fe/module/data/datasource/remote/order_remote_datasource.dart';
+import 'package:woodman_project_fe/module/domain/entities/list_order_entities.dart';
 import 'package:woodman_project_fe/module/domain/entities/make_order_entities.dart';
 import 'package:woodman_project_fe/module/domain/repository/order_repository.dart';
 
@@ -17,6 +18,16 @@ class OrderDomainRepositoryImpl implements OrderRepository {
     return result.fold(
       (failure) => Left(failure),
       (makeOrderModel) => Right(makeOrderModel.toEntity()),
+    );
+  }
+
+  @override
+  Future<Either<Failure, List<ListOrderEntities>>> orderList(
+      String token) async {
+    final result = await _orderRemoteDataSource.orderList(token);
+    return result.fold(
+      (failure) => Left(failure),
+      (listOrdersModel) => Right(listOrdersModel.toEntity()),
     );
   }
 }

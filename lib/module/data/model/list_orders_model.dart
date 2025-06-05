@@ -5,6 +5,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
+import 'package:woodman_project_fe/module/domain/entities/list_order_entities.dart';
+
 part 'list_orders_model.g.dart';
 
 ListOrdersModel listOrdersModelFromJson(String str) =>
@@ -29,6 +31,18 @@ class ListOrdersModel {
       _$ListOrdersModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ListOrdersModelToJson(this);
+
+  List<ListOrderEntities> toEntity() {
+    return orders.map((item) {
+      return ListOrderEntities(
+        uuid: item.orderNumber,
+        imageUrl: '-',
+        price: item.totalPrice,
+        createdAt: item.createdAt,
+        status: item.status,
+      );
+    }).toList();
+  }
 }
 
 @JsonSerializable()
@@ -41,12 +55,15 @@ class Order {
   int totalPrice;
   @JsonKey(name: "items")
   List<Item> items;
+  @JsonKey(name: "created_at")
+  DateTime createdAt;
 
   Order({
     required this.orderNumber,
     required this.status,
     required this.totalPrice,
     required this.items,
+    required this.createdAt,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
