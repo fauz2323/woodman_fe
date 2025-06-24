@@ -45,7 +45,7 @@ class ReviewOrderView extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text(
-                        'Order placed successfully!, please upload your payment proof'),
+                        'Order placed successfully!, please upload your payment proof in detail order page'),
                     duration: Duration(seconds: 2),
                     backgroundColor: Colors.green,
                   ),
@@ -89,8 +89,6 @@ class ReviewOrderView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildOrderSummaryHeader('Review Order'),
-                      const SizedBox(height: 16),
-                      _buildProductRow('Product', data.productName),
                       const SizedBox(height: 8),
                       _buildDetailRow('Price', 'Rp ${data.productPrice}'),
                       const SizedBox(height: 16),
@@ -111,6 +109,27 @@ class ReviewOrderView extends StatelessWidget {
                         address.address ?? 'N/A',
                         style: GoogleFonts.poppins(fontSize: 16),
                       ),
+                      const SizedBox(height: 16),
+                      _buildOrderSummaryHeader('List Order'),
+                      const SizedBox(height: 8),
+                      Column(
+                        children: data.listProduct!
+                            .map((product) => Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("- ${product.name}",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500)),
+                                    Text("${product.quantity} pcs",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500)),
+                                  ],
+                                ))
+                            .toList(),
+                      )
                     ],
                   ),
                 ],

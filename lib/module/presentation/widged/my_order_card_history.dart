@@ -38,9 +38,19 @@ class MyOrderCardHistory extends StatelessWidget {
         break;
 
       case 'waiting':
-        statusText = 'Failed';
+        statusText = 'waiting';
         statusColor = Colors.yellow;
         dateColor = Colors.black54;
+        break;
+      case 'success':
+        statusText = 'Success';
+        statusColor = Colors.green[700]!;
+        dateColor = Colors.black54;
+        break;
+      case 'canceled':
+        statusText = 'Canceled';
+        statusColor = Colors.red[700]!;
+        dateColor = Colors.red[700]!;
         break;
     }
 

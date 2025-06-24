@@ -8,7 +8,7 @@ import 'package:woodman_project_fe/module/presentation/view/empty_cart/empty_car
 import 'package:woodman_project_fe/module/presentation/view/home/home_view.dart';
 import 'package:woodman_project_fe/module/presentation/view/product_detail/product_detail_view.dart';
 import 'package:woodman_project_fe/module/presentation/view/review_order/review_order_view.dart';
-import 'package:woodman_project_fe/module/presentation/view/transaction/transaction_view.dart';
+import 'package:woodman_project_fe/module/presentation/view/transaction_detail/transaction_view.dart';
 
 import '../../module/presentation/view/login/login_view.dart';
 import '../../module/presentation/view/register/register_view.dart';
@@ -28,6 +28,6 @@ class RouteHelper {
     '/edit_address': (context) => EditAddressView(),
     '/order_history': (context) => const OrderHistoryView(),
     '/edit_password': (context) => const EditPasswordView(),
-    '/transaction': (context) => const TransactionView(),
+    '/transaction': (context) => const TransactionDetailView(),
   };
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:woodman_project_fe/di/injection.dart';
+import 'package:woodman_project_fe/module/presentation/argument/order_detail_argument.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_loading_widget.dart';
 import 'package:woodman_project_fe/module/presentation/widged/my_order_card_history.dart';
 
@@ -78,7 +79,8 @@ class OrderHistoryView extends StatelessWidget {
                       imageUrl:
                           'https://via.placeholder.com/150/F5F5F5/000000?Text=Product1',
                       onTap: () {
-                        Navigator.pushNamed(context, '/transaction');
+                        Navigator.pushNamed(context, '/transaction',
+                            arguments: OrderDetailArgument(orderId: data.uuid));
                       },
                     ),
                   )

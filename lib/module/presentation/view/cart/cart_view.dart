@@ -141,11 +141,19 @@ class CartView extends StatelessWidget {
                       return;
                     }
 
-                    Navigator.pushNamed(context, '/review_order',
-                        arguments: CheckOutArgument(
-                            productName:
-                                products.map((data) => data.name).toString(),
-                            productPrice: totalPrice));
+                    Navigator.pushNamed(
+                      context,
+                      '/review_order',
+                      arguments: CheckOutArgument(
+                        productName:
+                            products.map((data) => data.name).toString(),
+                        productPrice: totalPrice,
+                        listProduct: products
+                            .map((data) => ListProductArgument(
+                                name: data.name, quantity: data.quantity))
+                            .toList(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),

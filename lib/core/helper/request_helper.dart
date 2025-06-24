@@ -1,7 +1,7 @@
 import 'package:http/http.dart';
 
 class RequestHelper {
-  static String getBaseUrl = 'https://woodman.projectme.tech';
+  static String getBaseUrl = 'https://woodman.cloud';
   static String version = 'api/v1';
   static String baseUrl = '$getBaseUrl/$version';
 
@@ -23,6 +23,9 @@ class RequestHelper {
 
   static Uri makeOrder = Uri.parse('$baseUrl/make-order');
   static Uri orderList = Uri.parse('$baseUrl/get-order');
+  static Uri orderDetail = Uri.parse('$baseUrl/detail-order');
+  static Uri cancelOrder = Uri.parse('$baseUrl/cancel-order');
+  static Uri uploadProof = Uri.parse('$baseUrl/upload-payment-order');
 
   static getHeaderGet(var token) {
     Map<String, String> data = {

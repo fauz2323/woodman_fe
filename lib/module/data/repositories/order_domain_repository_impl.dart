@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:woodman_project_fe/core/error/failure_core.dart';
 import 'package:woodman_project_fe/module/data/datasource/remote/order_remote_datasource.dart';
 import 'package:woodman_project_fe/module/domain/entities/list_order_entities.dart';
 import 'package:woodman_project_fe/module/domain/entities/make_order_entities.dart';
+import 'package:woodman_project_fe/module/domain/entities/order_detail_entities.dart';
 import 'package:woodman_project_fe/module/domain/repository/order_repository.dart';
 
 @Injectable(as: OrderRepository)
@@ -28,6 +31,33 @@ class OrderDomainRepositoryImpl implements OrderRepository {
     return result.fold(
       (failure) => Left(failure),
       (listOrdersModel) => Right(listOrdersModel.toEntity()),
+    );
+  }
+
+  @override
+  Future<Either<Failure, String>> cancelOrder(String token, String orderId) {
+    // TODO: implement cancelOrder
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, OrderDetailEntities>> detailOrder(
+      String token, String orderId) async {
+    final result = await _orderRemoteDataSource.orderDetail(token, orderId);
+    return result.fold(
+      (failure) => Left(failure),
+      (orderDetailModel) => Right(orderDetailModel.toEntity()),
+    );
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadProof(
+      String token, String orderId, File imageFile) async {
+    final result =
+        await _orderRemoteDataSource.uploadProof(token, orderId, imageFile);
+    return result.fold(
+      (failure) => Left(failure),
+      (uploadProofModel) => Right(uploadProofModel),
     );
   }
 }
